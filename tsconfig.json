@@ -5,25 +5,34 @@
     "rootDir": "./",
     "removeComments": true,
     "strictPropertyInitialization": false,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
+      "@apis/*": [
+        "./src/apis/*"
+      ],
       "@configs/*": [
-        "configs/*"
+        "./src/configs/*"
       ],
       "@database/*": [
-        "database/*"
+        "./src/database/*"
       ],
       "@errors/*": [
-        "errors/*"
+        "./src/errors/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
       ],
       "@routes/*": [
-        "routes/*"
+        "./src/routes/*"
+      ],
+      "@tests/*": [
+        "./src/tests/*"
       ],
       "@types/*": [
-        "types/*"
+        "./src/types/*"
       ],
       "@utils/*": [
-        "utils/*"
+        "./src/utils/*"
       ]
     },
     "esModuleInterop": true,

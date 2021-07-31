@@ -4,7 +4,7 @@
 
 ### **Requisitos funcionais**
 
-- [ ] O usuário deve poder se cadastrar
+- [ x ] O usuário deve poder se cadastrar
 
 ### **Requisitos não funcionais**
 
