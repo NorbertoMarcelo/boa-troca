@@ -1,11 +1,12 @@
 import { hash } from 'bcrypt';
 import { inject, injectable } from 'tsyringe';
+import { cpf } from 'cpf-cnpj-validator';
 import {
   ICreateUserDTO,
   IUsersRepository,
 } from '@modules/accounts/dtos/IUserDTO';
 import { User } from '@modules/accounts/entities/User';
-import { cpf } from 'cpf-cnpj-validator';
+import { AppError } from '@errors/AppError';
 import { brasilApi } from '@apis/brasilApi';
 
 @injectable()
@@ -21,7 +22,7 @@ export class CreateUserUseCase {
     );
 
     if (userAlreadyExistsEmail) {
-      throw new Error('User already exists');
+      throw new AppError('User already exists');
     }
 
     const userAlreadyExistsCPF = await this.usersRepository.findByCpf(
@@ -29,13 +30,13 @@ export class CreateUserUseCase {
     );
 
     if (userAlreadyExistsCPF) {
-      throw new Error('User already exists');
+      throw new AppError('User already exists');
     }
 
     const cpfIsValid = cpf.isValid(informations.cpf);
 
     if (!cpfIsValid) {
-      throw new Error('User data is not correct');
+      throw new AppError('User data is not correct');
     }
 
     const cepIsValid = await brasilApi
@@ -44,7 +45,7 @@ export class CreateUserUseCase {
         if (response.status === 200) {
           return true;
         } else {
-          throw new Error('CEP is invalid');
+          throw new AppError('CEP is invalid');
         }
       });
 

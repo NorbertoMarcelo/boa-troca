@@ -18,11 +18,11 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.repository.findOne(email);
+    const user = await this.repository.findOne({ email });
     return user;
   }
 
-  async findByCpf(cpf: number): Promise<User> {
+  async findByCpf(cpf: string): Promise<User> {
     const user = await this.repository.findOne(cpf);
     return user;
   }
@@ -45,5 +45,13 @@ export class UsersRepository implements IUsersRepository {
     await this.repository.save(user);
 
     return user;
+  }
+
+  async update(id: string): Promise<User> {
+    throw new Error('Method not implemented.');
+  }
+
+  async delete(id: string): Promise<User> {
+    throw new Error('Method not implemented.');
   }
 }

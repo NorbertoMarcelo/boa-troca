@@ -8,9 +8,8 @@
 
 ### **Requisitos não funcionais**
 
-- [ ] Não deve ser possível cadastrar um usuário com cpf já existente
-- [ ] Não deve ser possível cadastrar um usuário com email já existente
-- [ ] O usuário deve confirmar seu email
+- [ X ] Não deve ser possível cadastrar um usuário com cpf já existente
+- [ X ] Não deve ser possível cadastrar um usuário com email já existente
 
 ## Criação de um anuncio
 

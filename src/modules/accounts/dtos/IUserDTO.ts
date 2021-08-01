@@ -14,4 +14,6 @@ export interface IUsersRepository {
   findByEmail(email: string): Promise<User>;
   findByCpf(cpf: string): Promise<User>;
   create(informations: ICreateUserDTO): Promise<User>;
+  update(id: string): Promise<User>;
+  delete(id: string): Promise<User>;
 }

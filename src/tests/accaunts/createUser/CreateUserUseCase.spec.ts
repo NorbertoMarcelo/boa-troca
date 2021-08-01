@@ -1,5 +1,6 @@
+import { AppError } from '@errors/AppError';
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
-import { UsersRepositoryInMemory } from '../UserRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
 
 describe('Create User Use Case', () => {
   let createUserUseCase: CreateUserUseCase;
@@ -43,7 +44,7 @@ describe('Create User Use Case', () => {
         cpf: '91898261083',
         cep: '36036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
 
     expect(async () => {
       await createUserUseCase.execute({
@@ -53,7 +54,7 @@ describe('Create User Use Case', () => {
         cpf: '10197761020',
         cep: '36036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to create a new user if the cpf is wrong or duplicated', async () => {
@@ -72,7 +73,7 @@ describe('Create User Use Case', () => {
         cpf: '34799347063',
         cep: '36036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
 
     expect(async () => {
       await createUserUseCase.execute({
@@ -82,7 +83,7 @@ describe('Create User Use Case', () => {
         cpf: '11100011100',
         cep: '36036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to create a new user if the cep is wrong', async () => {
@@ -94,7 +95,7 @@ describe('Create User Use Case', () => {
         cpf: '34799347063',
         cep: '00036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not be able to create a new user if the password is weak', async () => {
@@ -106,6 +107,6 @@ describe('Create User Use Case', () => {
         cpf: '34799347063',
         cep: '36036080',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

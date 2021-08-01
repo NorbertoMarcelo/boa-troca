@@ -19,6 +19,9 @@
       "@errors/*": [
         "./src/errors/*"
       ],
+      "@middlewares/*": [
+        "./src/middlewares/*"
+      ],
       "@modules/*": [
         "./src/modules/*"
       ],

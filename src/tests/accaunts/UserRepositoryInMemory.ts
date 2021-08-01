@@ -1,3 +1,4 @@
+import { AppError } from '@errors/AppError';
 import {
   ICreateUserDTO,
   IUsersRepository,
@@ -33,5 +34,11 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     this.user.push(user);
 
     return user;
+  }
+  update(id: string): Promise<User> {
+    throw new AppError('Method not implemented.');
+  }
+  delete(id: string): Promise<User> {
+    throw new AppError('Method not implemented.');
   }
 }
