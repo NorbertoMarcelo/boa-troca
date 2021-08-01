@@ -2,9 +2,9 @@ import { app } from '../../../app';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 
-let connection: Connection;
-
 describe('Create User Controller', () => {
+  let connection: Connection;
+
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();

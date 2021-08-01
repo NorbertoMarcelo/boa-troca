@@ -17,3 +17,16 @@ export interface IUsersRepository {
   update(id: string): Promise<User>;
   delete(id: string): Promise<User>;
 }
+
+export interface IRequest {
+  email: string;
+  password: string;
+}
+
+export interface IResponse {
+  user: {
+    name: string;
+    email: string;
+  };
+  token: string;
+}
