@@ -2,9 +2,11 @@ import { IsAlphanumeric, IsEmail, IsString, Max, Min } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryColumn,
   Unique,
+  UpdateDateColumn,
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -40,6 +42,12 @@ export class User {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 
   constructor() {
     if (!this.id) {

@@ -29,18 +29,16 @@ describe('Delete User Controller', () => {
 
     const user = await repository.findByCpf('58753551079');
 
-    const response = await request(app)
-      .delete('/users/delete')
-      .send({ id: user.id });
+    const response = await request(app).delete(`/users/delete/${user.id}`);
 
     expect(create.status).toBe(201);
-    // expect(response.status).toBe(204);
+    expect(response.status).toBe(204);
   });
 
   it('should not be abele to delete a nonexistent user', async () => {
-    const response = await request(app)
-      .delete('/users/delete')
-      .send('000000000000');
+    const response = await request(app).delete(
+      `/users/delete/${'000000000000'}`
+    );
 
     expect(response.status).toBe(400);
   });
