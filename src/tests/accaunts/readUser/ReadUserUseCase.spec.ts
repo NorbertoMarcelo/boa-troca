@@ -12,7 +12,9 @@ describe('Read User Use Case', () => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
     readUserUseCase = new ReadUserUseCase(usersRepositoryInMemory);
+  });
 
+  it('should be able to read an user', async () => {
     const newUser = await createUserUseCase.execute({
       name: 'User Name',
       email: 'user@email.com',
@@ -20,9 +22,7 @@ describe('Read User Use Case', () => {
       cpf: '10197761020',
       cep: '36036080',
     });
-  });
 
-  it('should be able to read an user', async () => {
     const user = await readUserUseCase.execute(newUser.id);
 
     expect(user.name).toEqual('User Name');

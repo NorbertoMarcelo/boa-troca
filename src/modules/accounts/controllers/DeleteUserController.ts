@@ -10,6 +10,6 @@ export class DeleteUserController {
 
     await deleteCarUseCase.execute(id);
 
-    return response.status(201).send();
+    return response.status(204).send();
   }
 }

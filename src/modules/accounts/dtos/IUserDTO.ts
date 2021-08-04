@@ -15,7 +15,7 @@ export interface IUsersRepository {
   findByCpf(cpf: string): Promise<User>;
   create(informations: ICreateUserDTO): Promise<User>;
   update(id: string): Promise<User>;
-  delete(id: string): Promise<User>;
+  delete(id: string): Promise<void>;
 }
 
 export interface IRequest {

@@ -13,7 +13,7 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.repository.findOne(id);
+    const user = await this.repository.findOne({ id });
     return user;
   }
 
@@ -23,23 +23,17 @@ export class UsersRepository implements IUsersRepository {
   }
 
   async findByCpf(cpf: string): Promise<User> {
-    const user = await this.repository.findOne(cpf);
+    const user = await this.repository.findOne({ cpf });
     return user;
   }
 
-  async create({
-    name,
-    email,
-    password,
-    cpf,
-    cep,
-  }: ICreateUserDTO): Promise<User> {
+  async create(informations: ICreateUserDTO): Promise<User> {
     const user = this.repository.create({
-      name: name,
-      email: email,
-      password: password,
-      cpf: cpf,
-      cep: null || cep,
+      name: informations.name,
+      email: informations.email,
+      password: informations.password,
+      cpf: informations.cpf,
+      cep: informations.cep || null,
     });
 
     await this.repository.save(user);
@@ -51,7 +45,7 @@ export class UsersRepository implements IUsersRepository {
     throw new Error('Method not implemented.');
   }
 
-  async delete(id: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.repository.softDelete(id);
   }
 }
