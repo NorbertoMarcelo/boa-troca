@@ -19,7 +19,7 @@ export class User {
   @Column()
   @IsString()
   @Min(3)
-  @Max(30)
+  @Max(60)
   name: string;
 
   @Column()

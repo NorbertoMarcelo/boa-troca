@@ -13,7 +13,7 @@ const deleteUserController = new DeleteUserController();
 
 usersRoutes.post('/create', createUserController.handle);
 usersRoutes.get('/read/:id', readUserController.handle);
-usersRoutes.post('/update', updateUserController.handle);
+usersRoutes.put('/update/:id', updateUserController.handle);
 usersRoutes.delete('/delete/:id', deleteUserController.handle);
 
 export { usersRoutes };

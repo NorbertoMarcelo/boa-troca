@@ -1,38 +1,26 @@
-import { app } from '../../../app';
 import request from 'supertest';
-import { Connection, createConnection } from 'typeorm';
+import { app } from '../../../app';
 import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
 
 describe('Delete User Controller', () => {
-  let connection: Connection;
   let repository: UsersRepository;
 
   beforeAll(async () => {
-    connection = await createConnection();
-    await connection.runMigrations();
     repository = new UsersRepository();
+
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user3@email.com',
+      password: 'password123',
+      cpf: '94447693054',
+      cep: '36032490',
+    });
   });
 
   afterAll(async () => {
-    await connection.dropDatabase();
-    await connection.close();
-  });
+    const user = await repository.findByCpf('94447693054');
 
-  it('should be abele to delete an user', async () => {
-    const create = await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'usercopy@email.com',
-      password: 'password123',
-      cpf: '58753551079',
-      cep: '36032490',
-    });
-
-    const user = await repository.findByCpf('58753551079');
-
-    const response = await request(app).delete(`/users/delete/${user.id}`);
-
-    expect(create.status).toBe(201);
-    expect(response.status).toBe(204);
+    if (user) await request(app).delete(`/users/delete/${user.id}`);
   });
 
   it('should not be abele to delete a nonexistent user', async () => {
@@ -41,5 +29,13 @@ describe('Delete User Controller', () => {
     );
 
     expect(response.status).toBe(400);
+  });
+
+  it('should be abele to delete an user', async () => {
+    const user = await repository.findByCpf('94447693054');
+
+    const response = await request(app).delete(`/users/delete/${user.id}`);
+
+    expect(response.status).toBe(204);
   });
 });

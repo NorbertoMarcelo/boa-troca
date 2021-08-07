@@ -19,7 +19,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return this.user.find((user) => user.cpf === cpf);
   }
 
-  async create(informations: ICreateUserDTO): Promise<User> {
+  async create(informations: ICreateUserDTO): Promise<void> {
     const user = new User();
 
     Object.assign(user, {
@@ -31,11 +31,18 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     });
 
     this.user.push(user);
-
-    return user;
   }
-  update(id: string): Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async update(id: string, informations: ICreateUserDTO): Promise<void> {
+    this.user.forEach((user) => {
+      if (user.id === id) {
+        user.name = informations.name;
+        user.email = informations.email;
+        user.password = informations.password;
+        user.cpf = informations.cpf;
+        user.cep = null || informations.cep;
+      }
+    });
   }
 
   async delete(id: string): Promise<void> {

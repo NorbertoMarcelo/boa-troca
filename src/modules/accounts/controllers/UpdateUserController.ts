@@ -7,9 +7,15 @@ export class UpdateUserController {
     const { id } = request.params;
     const { name, email, password, cpf, cep } = request.body;
 
-    const updateCarUseCase = container.resolve(UpdateUserUseCase);
+    const updateUserUseCase = container.resolve(UpdateUserUseCase);
 
-    await updateCarUseCase.execute(id);
+    await updateUserUseCase.execute(id, {
+      name,
+      email,
+      password,
+      cpf,
+      cep,
+    });
 
     return response.status(201).send();
   }

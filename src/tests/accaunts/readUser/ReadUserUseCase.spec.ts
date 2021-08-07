@@ -15,13 +15,15 @@ describe('Read User Use Case', () => {
   });
 
   it('should be able to read an user', async () => {
-    const newUser = await createUserUseCase.execute({
+    await createUserUseCase.execute({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       cpf: '10197761020',
       cep: '36036080',
     });
+
+    const newUser = await usersRepositoryInMemory.findByCpf('10197761020');
 
     const user = await readUserUseCase.execute(newUser.id);
 

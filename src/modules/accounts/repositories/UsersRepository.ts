@@ -27,7 +27,7 @@ export class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async create(informations: ICreateUserDTO): Promise<User> {
+  async create(informations: ICreateUserDTO): Promise<void> {
     const user = this.repository.create({
       name: informations.name,
       email: informations.email,
@@ -37,15 +37,19 @@ export class UsersRepository implements IUsersRepository {
     });
 
     await this.repository.save(user);
-
-    return user;
   }
 
-  async update(id: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  async update(id: string, informations: ICreateUserDTO): Promise<void> {
+    const user = await this.repository.update(id, {
+      name: informations.name,
+      email: informations.email,
+      password: informations.password,
+      cpf: informations.cpf,
+      cep: informations.cep || null,
+    });
   }
 
   async delete(id: string): Promise<void> {
-    await this.repository.softDelete({ id });
+    await this.repository.delete({ id });
   }
 }

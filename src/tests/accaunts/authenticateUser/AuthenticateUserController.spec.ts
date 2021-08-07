@@ -1,17 +1,16 @@
 import { app } from '../../../app';
 import request from 'supertest';
-import { Connection, createConnection } from 'typeorm';
+import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
 
 describe('Authenticate User Controller', () => {
-  let connection: Connection;
+  let repository: UsersRepository;
 
   beforeAll(async () => {
-    connection = await createConnection();
-    await connection.runMigrations();
+    repository = new UsersRepository();
 
     await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user@email.com',
+      email: 'user1@email.com',
       password: 'password123',
       cpf: '58753551079',
       cep: '36032490',
@@ -19,14 +18,15 @@ describe('Authenticate User Controller', () => {
   });
 
   afterAll(async () => {
-    await connection.dropDatabase();
-    await connection.close();
+    const user = await repository.findByCpf('58753551079');
+
+    if (user) await request(app).delete(`/users/delete/${user.id}`);
   });
 
   it('should be able to authenticate an user', async () => {
     const login = await request(app)
       .post('/sessions/login')
-      .send({ email: 'user@email.com', password: 'password123' });
+      .send({ email: 'user1@email.com', password: 'password123' });
 
     expect(login.body).toHaveProperty('token');
     expect(login.body).toHaveProperty('user');

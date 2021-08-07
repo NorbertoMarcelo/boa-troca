@@ -13,8 +13,8 @@ export interface IUsersRepository {
   findById(id: string): Promise<User>;
   findByEmail(email: string): Promise<User>;
   findByCpf(cpf: string): Promise<User>;
-  create(informations: ICreateUserDTO): Promise<User>;
-  update(id: string): Promise<User>;
+  create(informations: ICreateUserDTO): Promise<void>;
+  update(id: string, informations: ICreateUserDTO): Promise<void>;
   delete(id: string): Promise<void>;
 }
 

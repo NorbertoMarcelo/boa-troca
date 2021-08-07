@@ -14,8 +14,8 @@ describe('Update User Use Case', () => {
     updateUserUseCase = new UpdateUserUseCase(usersRepositoryInMemory);
   });
 
-  it('should be able to create a new user', async () => {
-    const user = await createUserUseCase.execute({
+  it('should be able to update user data', async () => {
+    await createUserUseCase.execute({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
@@ -23,11 +23,13 @@ describe('Update User Use Case', () => {
       cep: '36036080',
     });
 
-    await updateUserUseCase.execute({
-      id: user.id,
+    const user = await usersRepositoryInMemory.findByCpf('10197761020');
+
+    await updateUserUseCase.execute(user.id, {
       name: 'Outher User Name',
       email: 'outheruseremail@email.com',
       password: 'outherpassword123',
+      cpf: '10197761020',
       cep: '05010000',
     });
 

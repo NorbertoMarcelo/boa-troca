@@ -12,13 +12,15 @@ describe('Create User Use Case', () => {
   });
 
   it('should be able to create a new user', async () => {
-    const user = await createUserUseCase.execute({
+    await createUserUseCase.execute({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       cpf: '10197761020',
       cep: '36036080',
     });
+
+    const user = await usersRepositoryInMemory.findByCpf('10197761020');
 
     expect(user.name).toEqual('User Name');
     expect(user.email).toEqual('user@email.com');
