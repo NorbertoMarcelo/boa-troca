@@ -7,20 +7,6 @@ describe('Delete User Controller', () => {
 
   beforeAll(async () => {
     repository = new UsersRepository();
-
-    await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'user3@email.com',
-      password: 'password123',
-      cpf: '94447693054',
-      cep: '36032490',
-    });
-  });
-
-  afterAll(async () => {
-    const user = await repository.findByCpf('94447693054');
-
-    if (user) await request(app).delete(`/users/delete/${user.id}`);
   });
 
   it('should not be abele to delete a nonexistent user', async () => {
@@ -32,7 +18,15 @@ describe('Delete User Controller', () => {
   });
 
   it('should be abele to delete an user', async () => {
-    const user = await repository.findByCpf('94447693054');
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user14@email.com',
+      password: 'password123',
+      cpf: '93062127040',
+      cep: '36032490',
+    });
+
+    const user = await repository.findByCpf('93062127040');
 
     const response = await request(app).delete(`/users/delete/${user.id}`);
 

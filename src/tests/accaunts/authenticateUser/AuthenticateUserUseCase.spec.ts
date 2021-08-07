@@ -4,8 +4,8 @@ import { AuthenticateUserUseCase } from '@modules/accounts/useCases/Authenticate
 import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
 
 describe('Authenticate User Use Case', () => {
-  let authenticateUserUseCase: AuthenticateUserUseCase;
   let createUserUseCase: CreateUserUseCase;
+  let authenticateUserUseCase: AuthenticateUserUseCase;
   let userRepositoryInMemory: UsersRepositoryInMemory;
 
   beforeEach(async () => {
@@ -14,19 +14,19 @@ describe('Authenticate User Use Case', () => {
     authenticateUserUseCase = new AuthenticateUserUseCase(
       userRepositoryInMemory
     );
-
-    await createUserUseCase.execute({
-      name: 'User Name',
-      email: 'user@email.com',
-      password: 'password123',
-      cpf: '10197761020',
-      cep: '36036080',
-    });
   });
 
   it('should be able to authenticate an user', async () => {
+    await createUserUseCase.execute({
+      name: 'User Name',
+      email: 'user03@email.com',
+      password: 'password123',
+      cpf: '86940657037',
+      cep: '36036080',
+    });
+
     const login = await authenticateUserUseCase.execute({
-      email: 'user@email.com',
+      email: 'user03@email.com',
       password: 'password123',
     });
 
@@ -34,7 +34,7 @@ describe('Authenticate User Use Case', () => {
     expect(login).toHaveProperty('user');
     expect(login).not.toHaveProperty('password');
     expect(login.user.name).toBe('User Name');
-    expect(login.user.email).toBe('user@email.com');
+    expect(login.user.email).toBe('user03@email.com');
   });
 
   it('should not be able to authenticate an nonexistent user', async () => {
@@ -47,9 +47,17 @@ describe('Authenticate User Use Case', () => {
   });
 
   it('should not be able to authenticate with incorrect password', async () => {
+    await createUserUseCase.execute({
+      name: 'User Name',
+      email: 'user04@email.com',
+      password: 'password123',
+      cpf: '86940657037',
+      cep: '36036080',
+    });
+
     await expect(
       authenticateUserUseCase.execute({
-        email: 'user@email.com',
+        email: 'user04@email.com',
         password: 'incorrectpassword',
       })
     ).rejects.toBeInstanceOf(AppError);

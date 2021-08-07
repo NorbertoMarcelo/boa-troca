@@ -20,13 +20,13 @@ describe('Delete User Use Case', () => {
   it('should be able to delete an user', async () => {
     await createUserUseCase.execute({
       name: 'User Name',
-      email: 'user@email.com',
+      email: 'user15@email.com',
       password: 'password123',
-      cpf: '10197761020',
+      cpf: '94491128006',
       cep: '36036080',
     });
 
-    const user = await usersRepositoryInMemory.findByCpf('10197761020');
+    const user = await usersRepositoryInMemory.findByCpf('94491128006');
 
     await deleteUserUseCase.execute(user.id);
 

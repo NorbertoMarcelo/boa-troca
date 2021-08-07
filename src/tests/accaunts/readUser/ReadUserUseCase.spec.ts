@@ -17,18 +17,18 @@ describe('Read User Use Case', () => {
   it('should be able to read an user', async () => {
     await createUserUseCase.execute({
       name: 'User Name',
-      email: 'user@email.com',
+      email: 'user17@email.com',
       password: 'password123',
-      cpf: '10197761020',
+      cpf: '54923702001',
       cep: '36036080',
     });
 
-    const newUser = await usersRepositoryInMemory.findByCpf('10197761020');
+    const newUser = await usersRepositoryInMemory.findByCpf('54923702001');
 
     const user = await readUserUseCase.execute(newUser.id);
 
     expect(user.name).toEqual('User Name');
-    expect(user.email).toEqual('user@email.com');
+    expect(user.email).toEqual('user17@email.com');
     expect(user).not.toHaveProperty('password');
     expect(user).not.toHaveProperty('cpf');
   });

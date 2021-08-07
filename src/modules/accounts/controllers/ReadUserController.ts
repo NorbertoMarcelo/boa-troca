@@ -8,8 +8,8 @@ export class ReadUserController {
 
     const readCarUseCase = container.resolve(ReadUserUseCase);
 
-    await readCarUseCase.execute(id);
+    const user = await readCarUseCase.execute(id);
 
-    return response.status(201).send();
+    return response.status(201).json(user);
   }
 }

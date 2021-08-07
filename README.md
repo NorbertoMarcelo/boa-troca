@@ -4,12 +4,12 @@
 
 ### **Requisitos funcionais**
 
-- [ x ] O usuário deve poder se cadastrar
+- [x] O usuário deve poder se cadastrar
 
 ### **Requisitos não funcionais**
 
-- [ X ] Não deve ser possível cadastrar um usuário com cpf já existente
-- [ X ] Não deve ser possível cadastrar um usuário com email já existente
+- [x] Não deve ser possível cadastrar um usuário com cpf já existente
+- [x] Não deve ser possível cadastrar um usuário com email já existente
 
 ## Criação de um anuncio
 

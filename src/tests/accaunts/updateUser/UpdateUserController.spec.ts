@@ -7,30 +7,24 @@ describe('Update User Controller', () => {
 
   beforeAll(async () => {
     repository = new UsersRepository();
-
-    await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'user5@email.com',
-      password: 'password123',
-      cpf: '89468576094',
-      cep: '36032490',
-    });
-  });
-
-  afterAll(async () => {
-    const user = await repository.findByCpf('89468576094');
-
-    if (user) await request(app).delete(`/users/delete/${user.id}`);
   });
 
   it('should be able to create a new user', async () => {
-    const user = await repository.findByCpf('89468576094');
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user17@email.com',
+      password: 'password123',
+      cpf: '00795584024',
+      cep: '36032490',
+    });
+
+    const user = await repository.findByCpf('00795584024');
 
     const response = await request(app).put(`/users/update/${user.id}`).send({
       name: 'Outher User Name',
       email: 'outheruseremail@email.com',
       password: 'outherpassword123',
-      cpf: '89468576094',
+      cpf: '03097341005',
       cep: '05010000',
     });
 

@@ -14,8 +14,6 @@ export class DeleteUserUseCase {
 
     if (!user) throw new AppError('User not found');
 
-    console.log(user);
-
     try {
       await this.usersRepository.delete(id);
     } catch (error) {

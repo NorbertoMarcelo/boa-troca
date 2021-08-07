@@ -7,26 +7,20 @@ describe('Authenticate User Controller', () => {
 
   beforeAll(async () => {
     repository = new UsersRepository();
+  });
 
+  it('should be able to authenticate an user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user1@email.com',
+      email: 'user01@email.com',
       password: 'password123',
       cpf: '58753551079',
       cep: '36032490',
     });
-  });
 
-  afterAll(async () => {
-    const user = await repository.findByCpf('58753551079');
-
-    if (user) await request(app).delete(`/users/delete/${user.id}`);
-  });
-
-  it('should be able to authenticate an user', async () => {
     const login = await request(app)
       .post('/sessions/login')
-      .send({ email: 'user1@email.com', password: 'password123' });
+      .send({ email: 'user01@email.com', password: 'password123' });
 
     expect(login.body).toHaveProperty('token');
     expect(login.body).toHaveProperty('user');
@@ -42,9 +36,17 @@ describe('Authenticate User Controller', () => {
   });
 
   it('should not be able to authenticate with incorrect password', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user02@email.com',
+      password: 'password123',
+      cpf: '22597533026',
+      cep: '36032490',
+    });
+
     const login = await request(app)
       .post('/sessions/login')
-      .send({ email: 'user@email.com', password: 'incorrectpassword' });
+      .send({ email: 'user02@email.com', password: 'incorrectpassword' });
 
     expect(login.status).toBe(401);
   });

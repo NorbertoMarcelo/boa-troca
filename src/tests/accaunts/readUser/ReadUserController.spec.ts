@@ -7,24 +7,18 @@ describe('Read User Controller', () => {
 
   beforeAll(async () => {
     repository = new UsersRepository();
+  });
 
+  it('should be able to read an user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user4@email.com',
+      email: 'user16@email.com',
       password: 'password123',
-      cpf: '96467077008',
+      cpf: '65564241029',
       cep: '36032490',
     });
-  });
 
-  afterAll(async () => {
-    const user = await repository.findByCpf('96467077008');
-
-    if (user) await request(app).delete(`/users/delete/${user.id}`);
-  });
-
-  it('should be able to read an user', async (done) => {
-    const user = await repository.findByCpf('96467077008');
+    const user = await repository.findByCpf('65564241029');
 
     const response = await request(app).get(`/users/read/${user.id}`);
 

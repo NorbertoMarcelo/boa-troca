@@ -9,18 +9,12 @@ describe('Create User Controller', () => {
     repository = new UsersRepository();
   });
 
-  afterAll(async () => {
-    const user = await repository.findByCpf('57960384002');
-
-    if (user) await request(app).delete(`/users/delete/${user.id}`);
-  });
-
   it('should be able to create a new user', async () => {
     const response = await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user2@email.com',
+      email: 'user05@email.com',
       password: 'password123',
-      cpf: '57960384002',
+      cpf: '08246241060',
       cep: '36032490',
     });
 
@@ -30,7 +24,7 @@ describe('Create User Controller', () => {
   it('should not be able to create a new user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user2@email.com',
+      email: 'user06@email.com',
       password: 'password123',
       cpf: '57960384002',
       cep: '36032490',
@@ -38,7 +32,7 @@ describe('Create User Controller', () => {
 
     const response = await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user2@email.com',
+      email: 'user06@email.com',
       password: 'password123',
       cpf: '57960384002',
       cep: '36032490',
