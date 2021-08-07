@@ -3,6 +3,7 @@ import { CreateUserController } from '@modules/accounts/controllers/CreateUserCo
 import { ReadUserController } from '@modules/accounts/controllers/ReadUserController';
 import { DeleteUserController } from '@modules/accounts/controllers/DeleteUserController';
 import { UpdateUserController } from '@modules/accounts/controllers/UpdateUserController';
+import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 
 const usersRoutes = Router();
 
@@ -12,6 +13,8 @@ const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 
 usersRoutes.post('/create', createUserController.handle);
+
+usersRoutes.use(ensureAuthenticated);
 usersRoutes.get('/read/:id', readUserController.handle);
 usersRoutes.put('/update/:id', updateUserController.handle);
 usersRoutes.delete('/delete/:id', deleteUserController.handle);
