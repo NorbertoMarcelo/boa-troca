@@ -1,18 +1,28 @@
-import { app } from '../../../app';
 import request from 'supertest';
-import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
+import { Connection, createConnection } from 'typeorm';
+import { app } from '../../../app';
 
 describe('Create User Controller', () => {
-  let repository: UsersRepository;
+  let connection: Connection;
 
   beforeAll(async () => {
-    repository = new UsersRepository();
+    connection = await createConnection();
+    await connection.runMigrations();
+  });
+
+  afterEach(async () => {
+    await connection.query('TRUNCATE TABLE users;');
+  });
+
+  afterAll(async () => {
+    await connection.dropDatabase();
+    await connection.close();
   });
 
   it('should be able to create a new user', async () => {
     const response = await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user05@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '08246241060',
       cep: '36032490',
@@ -24,7 +34,7 @@ describe('Create User Controller', () => {
   it('should not be able to create a new user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user06@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '57960384002',
       cep: '36032490',
@@ -32,7 +42,7 @@ describe('Create User Controller', () => {
 
     const response = await request(app).post('/users/create').send({
       name: 'User Name',
-      email: 'user06@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '57960384002',
       cep: '36032490',

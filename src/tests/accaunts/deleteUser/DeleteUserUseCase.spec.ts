@@ -20,7 +20,7 @@ describe('Delete User Use Case', () => {
   it('should be able to delete an user', async () => {
     await createUserUseCase.execute({
       name: 'User Name',
-      email: 'user15@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '94491128006',
       cep: '36036080',

@@ -1,7 +1,7 @@
-import { AppError } from '@errors/AppError';
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
 import { AuthenticateUserUseCase } from '@modules/accounts/useCases/AuthenticateUserUseCase';
 import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
+import { AppError } from '@errors/AppError';
 
 describe('Authenticate User Use Case', () => {
   let createUserUseCase: CreateUserUseCase;
@@ -19,14 +19,14 @@ describe('Authenticate User Use Case', () => {
   it('should be able to authenticate an user', async () => {
     await createUserUseCase.execute({
       name: 'User Name',
-      email: 'user03@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '86940657037',
       cep: '36036080',
     });
 
     const login = await authenticateUserUseCase.execute({
-      email: 'user03@email.com',
+      email: 'user@email.com',
       password: 'password123',
     });
 
@@ -34,7 +34,7 @@ describe('Authenticate User Use Case', () => {
     expect(login).toHaveProperty('user');
     expect(login).not.toHaveProperty('password');
     expect(login.user.name).toBe('User Name');
-    expect(login.user.email).toBe('user03@email.com');
+    expect(login.user.email).toBe('user@email.com');
   });
 
   it('should not be able to authenticate an nonexistent user', async () => {
@@ -49,7 +49,7 @@ describe('Authenticate User Use Case', () => {
   it('should not be able to authenticate with incorrect password', async () => {
     await createUserUseCase.execute({
       name: 'User Name',
-      email: 'user04@email.com',
+      email: 'user@email.com',
       password: 'password123',
       cpf: '86940657037',
       cep: '36036080',
@@ -57,7 +57,7 @@ describe('Authenticate User Use Case', () => {
 
     await expect(
       authenticateUserUseCase.execute({
-        email: 'user04@email.com',
+        email: 'user@email.com',
         password: 'incorrectpassword',
       })
     ).rejects.toBeInstanceOf(AppError);
