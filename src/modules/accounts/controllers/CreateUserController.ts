@@ -6,9 +6,9 @@ export class CreateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name, email, password, cpf, cep } = request.body;
 
-    const createCarUseCase = container.resolve(CreateUserUseCase);
+    const createUserUseCase = container.resolve(CreateUserUseCase);
 
-    await createCarUseCase.execute({
+    await createUserUseCase.execute({
       name,
       email,
       password,

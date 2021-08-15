@@ -7,7 +7,16 @@ import { Announcement } from '@modules/announcement/entities/Announcement';
 export class AnnouncementRepositoryInMemory
   implements IAnnouncementsRepository
 {
-  ad: Announcement[] = [];
+  ads: Announcement[] = [];
+
+  async findByTitle(title: string): Promise<Announcement[]> {
+    return this.ads.filter((ad) => {
+      const containsWord = ad.title.indexOf(title) !== -1;
+      if (containsWord) {
+        return ad;
+      }
+    });
+  }
 
   async create(data: ICreateAnnouncementDTO): Promise<void> {
     const ad = new Announcement();
@@ -18,6 +27,6 @@ export class AnnouncementRepositoryInMemory
       status: data.status,
     });
 
-    this.ad.push(ad);
+    this.ads.push(ad);
   }
 }
