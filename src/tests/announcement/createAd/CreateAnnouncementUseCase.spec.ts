@@ -1,4 +1,3 @@
-import { AnnouncementSatus } from '@modules/announcement/dtos/IAnnouncementDTO';
 import { CreateAnnouncementUseCase } from '@modules/announcement/useCases/CreateAnnouncementUseCase';
 import { AnnouncementRepositoryInMemory } from '@tests/announcement/AnnouncementRepositoryInMemory';
 
@@ -12,7 +11,7 @@ describe('Create Announcement Use Case', () => {
   });
 
   it('should be able to crate a new ad', async () => {
-    await adRepositoryInMemory.create({
+    await createAdUseCase.execute({
       title: 'Ad Title',
       description: 'The ad description.',
     });

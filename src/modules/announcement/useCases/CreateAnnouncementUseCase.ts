@@ -3,7 +3,6 @@ import {
   IAnnouncementsRepository,
   ICreateAnnouncementDTO,
 } from '@modules/announcement/dtos/IAnnouncementDTO';
-import { date } from 'joi';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()

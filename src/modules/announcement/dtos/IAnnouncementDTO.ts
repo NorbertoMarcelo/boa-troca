@@ -9,6 +9,7 @@ export interface ICreateAnnouncementDTO {
 
 export interface IAnnouncementsRepository {
   findByTitle(title: string): Promise<Announcement[]>;
+  findById(id: string): Promise<Announcement>;
   create(data: ICreateAnnouncementDTO): Promise<void>;
 }
 

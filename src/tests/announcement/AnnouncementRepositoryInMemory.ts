@@ -18,6 +18,10 @@ export class AnnouncementRepositoryInMemory
     });
   }
 
+  async findById(id: string): Promise<Announcement> {
+    return this.ads.find((ad) => ad.id === id);
+  }
+
   async create(data: ICreateAnnouncementDTO): Promise<void> {
     const ad = new Announcement();
 

@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Create Announcement Use Case', () => {
+describe('Create Announcement Controller', () => {
   let connection: Connection;
 
   beforeAll(async () => {

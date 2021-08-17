@@ -21,11 +21,17 @@ export class AnnouncementsRepository implements IAnnouncementsRepository {
     return ads;
   }
 
+  async findById(id: string): Promise<Announcement> {
+    const ad = await this.repository.findOne({ id });
+
+    return ad;
+  }
+
   async create(data: ICreateAnnouncementDTO): Promise<void> {
     const ad = this.repository.create({
       title: data.title,
       description: data.description,
-      status: data.status || AnnouncementSatus.available,
+      status: data.status,
     });
 
     await this.repository.save(ad);
