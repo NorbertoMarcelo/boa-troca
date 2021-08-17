@@ -33,4 +33,14 @@ export class AnnouncementRepositoryInMemory
 
     this.ads.push(ad);
   }
+
+  async update(id: string, data: ICreateAnnouncementDTO): Promise<void> {
+    this.ads.forEach((ad) => {
+      if (ad.id === id) {
+        ad.title = data.title;
+        ad.description = data.description;
+        ad.status = data.status;
+      }
+    });
+  }
 }

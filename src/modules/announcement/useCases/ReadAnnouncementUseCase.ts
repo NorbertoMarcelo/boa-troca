@@ -1,3 +1,4 @@
+import { AppError } from '@errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import { IAnnouncementsRepository } from '../dtos/IAnnouncementDTO';
 import { Announcement } from '../entities/Announcement';
@@ -11,6 +12,8 @@ export class ReadAnnouncementUseCase {
 
   async execute(id: string): Promise<Announcement> {
     const ad = await this.adRepository.findById(id);
+
+    if (!ad) throw new AppError('Ad not found.');
 
     return ad;
   }

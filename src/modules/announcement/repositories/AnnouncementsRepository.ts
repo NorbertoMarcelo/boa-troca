@@ -1,6 +1,5 @@
 import { getRepository, Like, Repository } from 'typeorm';
 import {
-  AnnouncementSatus,
   IAnnouncementsRepository,
   ICreateAnnouncementDTO,
 } from '@modules/announcement/dtos/IAnnouncementDTO';
@@ -35,5 +34,13 @@ export class AnnouncementsRepository implements IAnnouncementsRepository {
     });
 
     await this.repository.save(ad);
+  }
+
+  async update(id: string, data: ICreateAnnouncementDTO): Promise<void> {
+    await this.repository.update(id, {
+      title: data.title,
+      description: data.description,
+      status: data.status,
+    });
   }
 }
