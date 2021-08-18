@@ -3,7 +3,7 @@ import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Update Announcement Controller', () => {
+describe('Delete Announcement Controller', () => {
   let connection: Connection;
   let adRepository: AnnouncementsRepository;
 
@@ -26,7 +26,7 @@ describe('Update Announcement Controller', () => {
     await connection.close();
   });
 
-  it('should be able to crate a new ad', async () => {
+  it('should be able to delete ad', async () => {
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
@@ -44,20 +44,12 @@ describe('Update Announcement Controller', () => {
     const ad = await adRepository.findByTitle('Ad Title');
 
     const response = await request(app)
-      .put(`/ads/update/${ad[0].id}`)
-      .send({
-        title: 'Outher Ad Title',
-        description: 'Outher ad description.',
-      })
+      .delete(`/ads/delete/${ad[0].id}`)
       .set('Authorization', 'Bearer ' + token);
 
-    const read = await request(app)
-      .get(`/ads/read/${ad[0].id}`)
-      .set('Authorization', 'Bearer ' + token);
+    const ad2 = await adRepository.findById(ad[0].id);
 
-    expect(response.status).toBe(201);
-    expect(read.body.title).toEqual('Outher Ad Title');
-    expect(read.body.description).toEqual('Outher ad description.');
-    expect(read.body.status).toEqual('available');
+    expect(response.status).toBe(204);
+    expect(ad2).toBeUndefined();
   });
 });

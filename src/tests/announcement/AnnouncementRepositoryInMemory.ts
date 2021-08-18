@@ -43,4 +43,12 @@ export class AnnouncementRepositoryInMemory
       }
     });
   }
+
+  async delete(id: string): Promise<void> {
+    this.ads.forEach((ad) => {
+      if (ad.id === id) {
+        this.ads.splice(this.ads.indexOf(ad), 1);
+      }
+    });
+  }
 }

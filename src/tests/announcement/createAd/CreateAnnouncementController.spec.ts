@@ -8,6 +8,14 @@ describe('Create Announcement Controller', () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
+
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      cpf: '58753551079',
+      cep: '36032490',
+    });
   });
 
   afterAll(async () => {
@@ -16,10 +24,19 @@ describe('Create Announcement Controller', () => {
   });
 
   it('should be able to crate a new ad', async () => {
-    const response = await request(app).post('/ads/create').send({
-      title: 'Ad Title',
-      description: 'The ad description.',
-    });
+    const login = await request(app)
+      .post('/sessions/login')
+      .send({ email: 'user@email.com', password: 'password123' });
+
+    const token = login.body.token;
+
+    const response = await request(app)
+      .post('/ads/create')
+      .send({
+        title: 'Ad Title',
+        description: 'The ad description.',
+      })
+      .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(201);
   });

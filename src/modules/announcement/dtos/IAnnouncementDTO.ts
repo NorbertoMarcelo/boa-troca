@@ -12,6 +12,7 @@ export interface IAnnouncementsRepository {
   findById(id: string): Promise<Announcement>;
   create(data: ICreateAnnouncementDTO): Promise<void>;
   update(id: string, data: ICreateAnnouncementDTO): Promise<void>;
+  delete(id: string): Promise<void>;
 }
 
 export enum AnnouncementSatus {

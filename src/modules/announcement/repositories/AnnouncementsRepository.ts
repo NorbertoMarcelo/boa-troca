@@ -43,4 +43,8 @@ export class AnnouncementsRepository implements IAnnouncementsRepository {
       status: data.status,
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.softDelete({ id });
+  }
 }
