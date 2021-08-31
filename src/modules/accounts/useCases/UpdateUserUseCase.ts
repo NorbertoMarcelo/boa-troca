@@ -1,10 +1,11 @@
 import { inject, injectable } from 'tsyringe';
-import { hash } from 'bcrypt';
-import { UserDataValidation } from '@utils/UserDataValidation';
 import {
-  ICreateUserDTO,
+  IUpdateUserDTO,
   IUsersRepository,
 } from '@modules/accounts/dtos/IUserDTO';
+import { UserDataValidation } from '@utils/UserDataValidation';
+import { AppError } from '@errors/AppError';
+import { hash } from 'bcrypt';
 
 @injectable()
 export class UpdateUserUseCase {
@@ -13,23 +14,29 @@ export class UpdateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(id: string, informations: ICreateUserDTO) {
-    const validation = new UserDataValidation();
+  async execute(data: IUpdateUserDTO): Promise<void> {
+    const userDataValidation = new UserDataValidation();
 
-    await validation.name(informations.name);
-    await validation.email(informations.email);
-    await validation.password(informations.password);
-    await validation.CPF(informations.cpf);
-    await validation.CEP(informations.cep);
+    const validationName = await userDataValidation.name(data.name);
+    if (!validationName) throw new AppError('Invalid Name.');
 
-    const passwordHash = await hash(informations.password, 8);
+    const validationEmail = await userDataValidation.email(data.email);
+    if (!validationEmail) throw new AppError('Invalid email.');
 
-    const user = await this.usersRepository.update(id, {
-      name: informations.name,
-      email: informations.email,
+    const validatePassword = await userDataValidation.password(data.password);
+    if (!validatePassword) throw new AppError('Invalid password.');
+
+    const validateCep = await userDataValidation.cep(data.cep);
+    if (!validateCep) throw new AppError('Invalid CEP.');
+
+    const passwordHash = await hash(data.password, 8);
+
+    await this.usersRepository.update({
+      id: data.id,
+      name: data.name,
+      email: data.email,
       password: passwordHash,
-      cpf: informations.cpf,
-      cep: informations.cep || null,
+      cep: data.cep || null,
     });
   }
 }

@@ -13,7 +13,6 @@ export async function ensureAuthenticated(
   next: NextFunction
 ) {
   const authHeader = request.headers.authorization;
-
   if (!authHeader) throw new AppError('Token missing!', 401);
 
   const [, token] = authHeader.split(' ');
@@ -27,8 +26,9 @@ export async function ensureAuthenticated(
     const usersRepository = new UsersRepository();
 
     const user = await usersRepository.findById(user_id);
-
     if (!user) throw new AppError('User does not exists!', 401);
+
+    request.user = { id: user_id };
 
     next();
   } catch {

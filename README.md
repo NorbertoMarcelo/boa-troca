@@ -15,11 +15,11 @@
 
 ### **Requisitos funcionais**
 
-- [ ] Deve ser possível criar um novo anuncio
+- [x] Deve ser possível criar um novo anuncio
 
 ### **Requisitos não funcionais**
 
-- [ ] O usuário deve esta logado para criar um anuncio
+- [x] O usuário deve esta logado para criar um anuncio
 
 ## Listagem de anúncios
 

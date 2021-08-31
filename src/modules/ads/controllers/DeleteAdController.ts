@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
-import { DeleteAnnouncementUseCase } from '../useCases/DeleteAnnouncementUseCase';
+import { DeleteAdUseCase } from '@modules/ads/useCases/DeleteAdUseCase';
 
-export class DeleteAnnouncementController {
+export class DeleteAdController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteAdUseCase = container.resolve(DeleteAnnouncementUseCase);
+    const deleteAdUseCase = container.resolve(DeleteAdUseCase);
 
     await deleteAdUseCase.execute(id);
 
-    return response.status(204).send();
+    return response.status(200).send();
   }
 }

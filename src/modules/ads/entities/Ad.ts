@@ -3,13 +3,16 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '@modules/accounts/entities/User';
 import { v4 as uuidV4 } from 'uuid';
 
-@Entity('announcement')
-export class Announcement {
+@Entity('ads')
+export class Ad {
   @PrimaryColumn()
   id: string;
 
@@ -21,6 +24,9 @@ export class Announcement {
 
   @Column()
   status: string;
+
+  @ManyToOne(() => User, (user) => user.ads)
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;

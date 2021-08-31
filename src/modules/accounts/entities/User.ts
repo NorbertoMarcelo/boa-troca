@@ -1,13 +1,14 @@
-import { IsAlphanumeric, IsEmail, IsString, Max, Min } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   Unique,
   UpdateDateColumn,
 } from 'typeorm';
+import { Ad } from '@modules/ads/entities/Ad';
 import { v4 as uuidV4 } from 'uuid';
 
 @Entity('users')
@@ -17,28 +18,22 @@ export class User {
   id: string;
 
   @Column()
-  @IsString()
-  @Min(3)
-  @Max(60)
   name: string;
 
   @Column()
-  @IsEmail()
   email: string;
 
   @Column()
-  @IsAlphanumeric()
-  @Min(6)
-  @Max(30)
   password: string;
 
   @Column()
-  @IsString()
   cpf: string;
 
   @Column()
-  @IsString()
   cep: string;
+
+  @OneToMany(() => Ad, (ad) => ad.user)
+  ads: Ad[];
 
   @CreateDateColumn()
   created_at: Date;

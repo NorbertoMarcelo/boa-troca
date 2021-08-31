@@ -1,4 +1,4 @@
-import { AnnouncementsRepository } from '@modules/announcement/repositories/AnnouncementsRepository';
+import { AnnouncementsRepository } from '@modules/ads/repositories/AnnouncementsRepository';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';

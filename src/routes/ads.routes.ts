@@ -1,18 +1,21 @@
 import { Router } from 'express';
+
+import { CreateAdController } from '@modules/ads/controllers/CreateAdController';
+import { ReadAdController } from '@modules/ads/controllers/ReadAdController';
+import { UpdateAdController } from '@modules/ads/controllers/UpdateAdController';
+import { DeleteAdController } from '@modules/ads/controllers/DeleteAdController';
+
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
-import { CreateAnnouncementController } from '@modules/announcement/controllers/CreateAnnouncementController';
-import { ReadAnnouncementController } from '@modules/announcement/controllers/ReadAnnouncementController';
-import { UpdateAnnouncementController } from '@modules/announcement/controllers/UpdateAnnouncementController';
-import { DeleteAnnouncementController } from '@modules/announcement/controllers/DeleteAnnouncementController';
 
 const adsRouter = Router();
 
-const createAdController = new CreateAnnouncementController();
-const readAdController = new ReadAnnouncementController();
-const updateController = new UpdateAnnouncementController();
-const deleteAdController = new DeleteAnnouncementController();
+const createAdController = new CreateAdController();
+const readAdController = new ReadAdController();
+const updateController = new UpdateAdController();
+const deleteAdController = new DeleteAdController();
 
 adsRouter.use(ensureAuthenticated);
+
 adsRouter.post('/create', createAdController.handle);
 adsRouter.get('/read/:id', readAdController.handle);
 adsRouter.put('/update/:id', updateController.handle);

@@ -10,6 +10,6 @@ export class ReadUserController {
 
     const user = await readCarUseCase.execute(id);
 
-    return response.status(201).json(user);
+    return response.status(200).json(user);
   }
 }

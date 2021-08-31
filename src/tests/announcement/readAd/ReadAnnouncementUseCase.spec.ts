@@ -1,5 +1,5 @@
-import { CreateAnnouncementUseCase } from '@modules/announcement/useCases/CreateAnnouncementUseCase';
-import { ReadAnnouncementUseCase } from '@modules/announcement/useCases/ReadAnnouncementUseCase';
+import { CreateAnnouncementUseCase } from '@modules/ads/useCases/CreateAnnouncementUseCase';
+import { ReadAnnouncementUseCase } from '@modules/ads/useCases/ReadAnnouncementUseCase';
 import { AnnouncementRepositoryInMemory } from '../AnnouncementRepositoryInMemory';
 
 describe('Read Ad Use Case', () => {

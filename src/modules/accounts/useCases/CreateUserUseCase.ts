@@ -1,12 +1,11 @@
-import { hash } from 'bcrypt';
 import { inject, injectable } from 'tsyringe';
 import {
   ICreateUserDTO,
   IUsersRepository,
 } from '@modules/accounts/dtos/IUserDTO';
-import { User } from '@modules/accounts/entities/User';
-import { AppError } from '@errors/AppError';
 import { UserDataValidation } from '@utils/UserDataValidation';
+import { AppError } from '@errors/AppError';
+import { hash } from 'bcrypt';
 
 @injectable()
 export class CreateUserUseCase {
@@ -15,39 +14,38 @@ export class CreateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(informations: ICreateUserDTO): Promise<void> {
-    const validation = new UserDataValidation();
+  async execute(data: ICreateUserDTO): Promise<void> {
+    const userDataValidation = new UserDataValidation();
 
-    await validation.name(informations.name);
-    await validation.email(informations.email);
-    await validation.password(informations.password);
-    await validation.CPF(informations.cpf);
-    await validation.CEP(informations.cep);
+    const validationName = await userDataValidation.name(data.name);
+    if (!validationName) throw new AppError('Invalid Name.');
 
-    const emailIsAlreadyInUse = await this.usersRepository.findByEmail(
-      informations.email
-    );
+    const validationEmail = await userDataValidation.email(data.email);
+    if (!validationEmail) throw new AppError('Invalid email.');
 
-    if (emailIsAlreadyInUse) {
-      throw new AppError('User already exists');
-    }
+    const validatePassword = await userDataValidation.password(data.password);
+    if (!validatePassword) throw new AppError('Invalid password.');
 
-    const cpfIsAlreadyInUse = await this.usersRepository.findByCpf(
-      informations.cpf
-    );
+    const validateCpf = await userDataValidation.cpf(data.cpf);
+    if (!validateCpf) throw new AppError('Invalid CPF.');
 
-    if (cpfIsAlreadyInUse) {
-      throw new AppError('User already exists');
-    }
+    const validateCep = await userDataValidation.cep(data.cep);
+    if (!validateCep) throw new AppError('Invalid CEP.');
 
-    const passwordHash = await hash(informations.password, 8);
+    const emailAlreadyUsed = await this.usersRepository.findByEmail(data.email);
+    if (emailAlreadyUsed) throw new AppError('User already exists.');
 
-    const user = await this.usersRepository.create({
-      name: informations.name,
-      email: informations.email,
+    const cpfAlreadyUsed = await this.usersRepository.findByCpf(data.cpf);
+    if (cpfAlreadyUsed) throw new AppError('User already exists.');
+
+    const passwordHash = await hash(data.password, 8);
+
+    await this.usersRepository.create({
+      name: data.name,
+      email: data.email,
       password: passwordHash,
-      cpf: informations.cpf,
-      cep: informations.cep || null,
+      cpf: data.cpf,
+      cep: data.cep || null,
     });
   }
 }

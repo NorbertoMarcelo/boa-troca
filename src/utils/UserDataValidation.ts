@@ -1,20 +1,20 @@
 import { brasilApi } from '@apis/brasilApi';
-import { AppError } from '@errors/AppError';
 import { cpf } from 'cpf-cnpj-validator';
 
 export class UserDataValidation {
-  async name(name: string): Promise<void> {
+  async name(name: string): Promise<boolean> {
     const regex = /[^A-Za-z]\s/;
 
-    const test = regex.test(name);
+    const nameTest = regex.test(name);
 
-    if (test)
-      throw new AppError(
-        'Invalid name, contains numbers or special characters.'
-      );
+    if (nameTest) return false;
+    if (name.length < 3) return false;
+    if (name.length > 120) return false;
+
+    return true;
   }
 
-  async email(email: string): Promise<void> {
+  async email(email: string): Promise<boolean> {
     const emailStructureRegex = /\S+@\S+\.\S+/;
     const specialCharacterRegex = /[!#$%^&*()=+{}()]/;
     const blankSpaceRegex = /\s/;
@@ -23,34 +23,38 @@ export class UserDataValidation {
     const specialCharacterTest = specialCharacterRegex.test(email);
     const blankSpaceTest = blankSpaceRegex.test(email);
 
-    if (!emailStructureTest) throw new AppError('Email address is not valid.');
-    if (specialCharacterTest) throw new AppError('Email address is not valid.');
-    if (blankSpaceTest) throw new AppError('Email address is not valid.');
+    if (!emailStructureTest) return false;
+    if (specialCharacterTest) return false;
+    if (blankSpaceTest) return false;
+
+    return true;
   }
 
-  async password(password: string): Promise<void> {
+  async password(password: string): Promise<boolean> {
     const passwordLengh = password.length;
 
-    if (passwordLengh < 6) throw new AppError('Password too short');
+    if (passwordLengh < 6) return false;
+
+    return true;
   }
 
-  async CPF(CPF: string): Promise<void> {
-    const cpfIsValid = cpf.isValid(CPF);
+  async cpf(cpfNumber: string): Promise<boolean> {
+    const cpfIsValid = cpf.isValid(cpfNumber);
 
-    if (!cpfIsValid) {
-      throw new AppError('User data is not correct');
-    }
+    if (cpfIsValid) return true;
+
+    return false;
   }
 
-  async CEP(CEP: string): Promise<void> {
+  async cep(cep: string): Promise<boolean> {
     const cepIsValid = await brasilApi
-      .get(`/cep/v1/${CEP}`)
+      .get(`/cep/v1/${cep}`)
       .then((response) => {
         if (response.status === 200) {
-          return;
-        } else {
-          throw new AppError('CEP is invalid');
+          return true;
         }
       });
+
+    return false;
   }
 }

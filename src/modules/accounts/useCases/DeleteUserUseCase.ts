@@ -9,15 +9,14 @@ export class DeleteUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(id: string) {
+  async execute(id: string): Promise<void> {
     const user = await this.usersRepository.findById(id);
-
-    if (!user) throw new AppError('User not found');
+    if (!user) throw new AppError('User not found.');
 
     try {
       await this.usersRepository.delete(id);
     } catch (error) {
-      throw new AppError('Could not run', 500);
+      throw new AppError('Could not run.', 500);
     }
   }
 }
