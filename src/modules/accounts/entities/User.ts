@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   OneToMany,
   PrimaryColumn,
   Unique,
@@ -33,6 +34,7 @@ export class User {
   cep: string;
 
   @OneToMany(() => Ad, (ad) => ad.user)
+  @JoinColumn()
   ads: Ad[];
 
   @CreateDateColumn()

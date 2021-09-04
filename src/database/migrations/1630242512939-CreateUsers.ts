@@ -58,16 +58,6 @@ export class CreateUsers1630242512939 implements MigrationInterface {
             isNullable: true,
           },
         ],
-        foreignKeys: [
-          {
-            name: 'FKAdUser',
-            referencedTableName: 'ads',
-            referencedColumnNames: ['id'],
-            columnNames: ['announcements'],
-            onDelete: 'SET NULL',
-            onUpdate: 'SET NULL',
-          },
-        ],
       })
     );
   }

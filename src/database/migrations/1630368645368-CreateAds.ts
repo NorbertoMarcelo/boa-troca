@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class CreateAds1630368645368 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -42,16 +47,6 @@ export class CreateAds1630368645368 implements MigrationInterface {
             name: 'deleted_at',
             type: 'timestamp',
             isNullable: true,
-          },
-        ],
-        foreignKeys: [
-          {
-            name: 'FKUserAd',
-            referencedTableName: 'users',
-            referencedColumnNames: ['id'],
-            columnNames: ['user'],
-            onDelete: 'SET NULL',
-            onUpdate: 'SET NULL',
           },
         ],
       })
