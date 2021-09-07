@@ -40,7 +40,7 @@ export class CreateUsers1630242512939 implements MigrationInterface {
           },
           {
             name: 'ads',
-            type: 'varchar',
+            type: 'uuid',
           },
           {
             name: 'created_at',
