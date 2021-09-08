@@ -24,6 +24,7 @@ describe('Authenticate User Controller', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '58753551079',
       cep: '36032490',
     });
@@ -32,6 +33,7 @@ describe('Authenticate User Controller', () => {
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
 
+    expect(login.status).toBe(200);
     expect(login.body).toHaveProperty('token');
     expect(login.body).toHaveProperty('user');
     expect(login).not.toHaveProperty('password');

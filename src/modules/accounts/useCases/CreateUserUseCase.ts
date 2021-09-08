@@ -26,6 +26,9 @@ export class CreateUserUseCase {
     const validatePassword = await userDataValidation.password(data.password);
     if (!validatePassword) throw new AppError('Invalid password.');
 
+    const validatePhone = await userDataValidation.phone(data.phone);
+    if (!validatePhone) throw new AppError('Invalid phone number.');
+
     const validateCpf = await userDataValidation.cpf(data.cpf);
     if (!validateCpf) throw new AppError('Invalid CPF.');
 
@@ -41,9 +44,11 @@ export class CreateUserUseCase {
     const passwordHash = await hash(data.password, 8);
 
     await this.usersRepository.create({
+      avatar: data.avatar || null,
       name: data.name,
       email: data.email,
       password: passwordHash,
+      phone: data.phone,
       cpf: data.cpf,
       cep: data.cep || null,
     });

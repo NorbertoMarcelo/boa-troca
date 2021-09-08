@@ -19,23 +19,25 @@ describe('Read User Use Case', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '54923702001',
       cep: '36036080',
     });
 
-    const newUser = await usersRepositoryInMemory.findByCpf('54923702001');
+    const user = await usersRepositoryInMemory.findByCpf('54923702001');
 
-    const user = await readUserUseCase.execute(newUser.id);
+    const response = await readUserUseCase.execute(user.id);
 
-    expect(user.name).toEqual('User Name');
-    expect(user.email).toEqual('user@email.com');
-    expect(user).not.toHaveProperty('password');
-    expect(user).not.toHaveProperty('cpf');
+    expect(response.name).toEqual('User Name');
+    expect(response.email).toEqual('user@email.com');
+    expect(response.cep).toEqual('36036080');
+    expect(response).not.toHaveProperty('password');
+    expect(response).not.toHaveProperty('cpf');
   });
 
   it('should not be able to read an nonexistent user', async () => {
     await expect(
-      readUserUseCase.execute('00000000000000000000')
+      readUserUseCase.execute('5b1c2509-66d8-4783-b13d-572abb1ac3e8')
     ).rejects.toBeInstanceOf(AppError);
   });
 });

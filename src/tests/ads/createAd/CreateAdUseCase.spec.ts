@@ -1,13 +1,13 @@
-import { CreateAnnouncementUseCase } from '@modules/announcement/useCases/CreateAnnouncementUseCase';
-import { AnnouncementRepositoryInMemory } from '@tests/announcement/AnnouncementRepositoryInMemory';
+import { CreateAdUseCase } from '@modules/ads/useCases/CreateAdUseCase';
+import { AdsRepositoryInMemory } from '@tests/ads/AdsRepositoryInMemory';
 
 describe('Create Announcement Use Case', () => {
-  let createAdUseCase: CreateAnnouncementUseCase;
-  let adRepositoryInMemory: AnnouncementRepositoryInMemory;
+  let createAdUseCase: CreateAdUseCase;
+  let adRepositoryInMemory: AdsRepositoryInMemory;
 
   beforeEach(() => {
-    adRepositoryInMemory = new AnnouncementRepositoryInMemory();
-    createAdUseCase = new CreateAnnouncementUseCase(adRepositoryInMemory);
+    adRepositoryInMemory = new AdsRepositoryInMemory();
+    createAdUseCase = new CreateAdUseCase(adRepositoryInMemory);
   });
 
   it('should be able to crate a new ad', async () => {

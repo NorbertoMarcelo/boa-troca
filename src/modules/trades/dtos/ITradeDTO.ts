@@ -16,7 +16,7 @@ export interface IUpdateTradeDTO {
 export interface ITradesRepository {
   findById(id: string): Promise<Trade>;
   create(data: ICreateTradeDTO): Promise<void>;
-  update(status: IUpdateTradeDTO): Promise<void>;
+  update(data: IUpdateTradeDTO): Promise<void>;
   delete(id: string): Promise<void>;
 }
 

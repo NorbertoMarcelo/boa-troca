@@ -16,6 +16,7 @@ describe('Create User Use Case', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '48113558063',
       cep: '36036080',
     });
@@ -36,6 +37,7 @@ describe('Create User Use Case', () => {
         name: 'User Name 1',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '03741481041',
         cep: '36036080',
       });
@@ -43,6 +45,7 @@ describe('Create User Use Case', () => {
         name: 'User Name 2',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '91898261083',
         cep: '36036080',
       });
@@ -53,6 +56,7 @@ describe('Create User Use Case', () => {
         name: 'User Name',
         email: 'useremail.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '10197761020',
         cep: '36036080',
       });
@@ -65,6 +69,7 @@ describe('Create User Use Case', () => {
         name: 'User Name 1',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '34799347063',
         cep: '36036080',
       });
@@ -72,6 +77,7 @@ describe('Create User Use Case', () => {
         name: 'User Name 2',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '34799347063',
         cep: '36036080',
       });
@@ -79,9 +85,10 @@ describe('Create User Use Case', () => {
 
     expect(async () => {
       await createUserUseCase.execute({
-        name: 'User Name 2',
+        name: 'User Name',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '11100011100',
         cep: '36036080',
       });
@@ -94,6 +101,7 @@ describe('Create User Use Case', () => {
         name: 'User Name 1',
         email: 'user@email.com',
         password: 'password123',
+        phone: '32148000',
         cpf: '04900380008',
         cep: '00036080',
       });
@@ -106,7 +114,21 @@ describe('Create User Use Case', () => {
         name: 'User Name 1',
         email: 'user@email.com',
         password: 'pass',
+        phone: '32148000',
         cpf: '26564404085',
+        cep: '36036080',
+      });
+    }).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to crate a new user if the phone number is invalid', async () => {
+    expect(async () => {
+      await createUserUseCase.execute({
+        name: 'User Name 1',
+        email: 'user@email.com',
+        password: 'password123',
+        phone: '321480A00',
+        cpf: '04900380008',
         cep: '36036080',
       });
     }).rejects.toBeInstanceOf(AppError);

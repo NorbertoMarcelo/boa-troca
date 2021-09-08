@@ -22,6 +22,7 @@ describe('Delete User Use Case', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '94491128006',
       cep: '36036080',
     });

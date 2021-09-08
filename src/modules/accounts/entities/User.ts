@@ -19,6 +19,9 @@ export class User {
   id: string;
 
   @Column()
+  avatar: string;
+
+  @Column()
   name: string;
 
   @Column()
@@ -26,6 +29,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  phone: string;
 
   @Column()
   cpf: string;

@@ -24,8 +24,8 @@ export class Ad {
   @Column()
   status: string;
 
-  @ManyToOne(() => User, (user) => user.ads)
-  user: User;
+  @Column()
+  user: string;
 
   @CreateDateColumn()
   created_at: Date;

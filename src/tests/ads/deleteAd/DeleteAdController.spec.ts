@@ -1,22 +1,23 @@
-import { AnnouncementsRepository } from '@modules/ads/repositories/AnnouncementsRepository';
+import { AdsRepository } from '@modules/ads/repositories/AdsRepository';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Update Announcement Controller', () => {
+describe('Delete Announcement Controller', () => {
   let connection: Connection;
-  let adRepository: AnnouncementsRepository;
+  let adsRepository: AdsRepository;
 
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    adRepository = new AnnouncementsRepository();
+    adsRepository = new AdsRepository();
 
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       cpf: '58753551079',
+      phone: '32148000',
       cep: '36032490',
     });
   });
@@ -26,7 +27,7 @@ describe('Update Announcement Controller', () => {
     await connection.close();
   });
 
-  it('should be able to crate a new ad', async () => {
+  it('should be able to delete ad', async () => {
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
@@ -41,23 +42,15 @@ describe('Update Announcement Controller', () => {
       })
       .set('Authorization', 'Bearer ' + token);
 
-    const ad = await adRepository.findByTitle('Ad Title');
+    const ad = await adsRepository.findByTitle('Ad Title');
 
     const response = await request(app)
-      .put(`/ads/update/${ad[0].id}`)
-      .send({
-        title: 'Outher Ad Title',
-        description: 'Outher ad description.',
-      })
+      .delete(`/ads/delete/${ad[0].id}`)
       .set('Authorization', 'Bearer ' + token);
 
-    const read = await request(app)
-      .get(`/ads/read/${ad[0].id}`)
-      .set('Authorization', 'Bearer ' + token);
+    const ad2 = await adsRepository.findById(ad[0].id);
 
-    expect(response.status).toBe(201);
-    expect(read.body.title).toEqual('Outher Ad Title');
-    expect(read.body.description).toEqual('Outher ad description.');
-    expect(read.body.status).toEqual('available');
+    expect(response.status).toBe(200);
+    expect(ad2).toBeUndefined();
   });
 });

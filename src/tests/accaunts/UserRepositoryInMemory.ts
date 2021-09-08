@@ -1,5 +1,6 @@
 import {
   ICreateUserDTO,
+  IUpdateUserDTO,
   IUsersRepository,
 } from '@modules/accounts/dtos/IUserDTO';
 import { User } from '@modules/accounts/entities/User';
@@ -19,28 +20,29 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return this.user.find((user) => user.cpf === cpf);
   }
 
-  async create(informations: ICreateUserDTO): Promise<void> {
+  async create(data: ICreateUserDTO): Promise<void> {
     const user = new User();
 
     Object.assign(user, {
-      name: informations.name,
-      email: informations.email,
-      password: informations.password,
-      cpf: informations.cpf,
-      cep: null || informations.cep,
+      avatar: data.avatar,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      cpf: data.cpf,
+      cep: data.cep,
     });
 
     this.user.push(user);
   }
 
-  async update(id: string, informations: ICreateUserDTO): Promise<void> {
+  async update(data: IUpdateUserDTO): Promise<void> {
     this.user.forEach((user) => {
-      if (user.id === id) {
-        user.name = informations.name;
-        user.email = informations.email;
-        user.password = informations.password;
-        user.cpf = informations.cpf;
-        user.cep = null || informations.cep;
+      if (user.id === data.id) {
+        user.name = data.name;
+        user.email = data.email;
+        user.password = data.password;
+        user.cep = null || data.cep;
       }
     });
   }

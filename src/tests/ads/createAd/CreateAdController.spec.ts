@@ -1,24 +1,13 @@
-import { AnnouncementsRepository } from '@modules/ads/repositories/AnnouncementsRepository';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Delete Announcement Controller', () => {
+describe('Create Announcement Controller', () => {
   let connection: Connection;
-  let adRepository: AnnouncementsRepository;
 
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    adRepository = new AnnouncementsRepository();
-
-    await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'user@email.com',
-      password: 'password123',
-      cpf: '58753551079',
-      cep: '36032490',
-    });
   });
 
   afterAll(async () => {
@@ -26,14 +15,23 @@ describe('Delete Announcement Controller', () => {
     await connection.close();
   });
 
-  it('should be able to delete ad', async () => {
+  it('should be able to crate a new ad', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      phone: '32148000',
+      cpf: '58753551079',
+      cep: '36032490',
+    });
+
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
 
     const token = login.body.token;
 
-    await request(app)
+    const response = await request(app)
       .post('/ads/create')
       .send({
         title: 'Ad Title',
@@ -41,15 +39,6 @@ describe('Delete Announcement Controller', () => {
       })
       .set('Authorization', 'Bearer ' + token);
 
-    const ad = await adRepository.findByTitle('Ad Title');
-
-    const response = await request(app)
-      .delete(`/ads/delete/${ad[0].id}`)
-      .set('Authorization', 'Bearer ' + token);
-
-    const ad2 = await adRepository.findById(ad[0].id);
-
-    expect(response.status).toBe(204);
-    expect(ad2).toBeUndefined();
+    expect(response.status).toBe(201);
   });
 });

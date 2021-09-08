@@ -17,7 +17,7 @@ export class CreateAdUseCase {
       title: data.title,
       description: data.description,
       status: AdSatus.available,
-      user: data.user,
+      user: data.user || null,
     });
   }
 }

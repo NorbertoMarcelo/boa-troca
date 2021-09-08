@@ -1,18 +1,22 @@
+import { AdsRepository } from '@modules/ads/repositories/AdsRepository';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Create Announcement Controller', () => {
+describe('Read Announcement Controller', () => {
   let connection: Connection;
+  let adsRepository: AdsRepository;
 
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
+    adsRepository = new AdsRepository();
 
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '58753551079',
       cep: '36032490',
     });
@@ -30,7 +34,7 @@ describe('Create Announcement Controller', () => {
 
     const token = login.body.token;
 
-    const response = await request(app)
+    await request(app)
       .post('/ads/create')
       .send({
         title: 'Ad Title',
@@ -38,6 +42,14 @@ describe('Create Announcement Controller', () => {
       })
       .set('Authorization', 'Bearer ' + token);
 
-    expect(response.status).toBe(201);
+    const ad = await adsRepository.findByTitle('Ad Title');
+
+    const response = await request(app)
+      .get(`/ads/read/${ad[0].id}`)
+      .set('Authorization', 'Bearer ' + token);
+
+    expect(response.status).toBe(200);
+    expect(response.body.title).toEqual('Ad Title');
+    expect(response.body.description).toEqual('The ad description.');
   });
 });

@@ -11,14 +11,10 @@ describe('Update User Controller', () => {
     connection = await createConnection();
     await connection.runMigrations();
     repository = new UsersRepository();
+  });
 
-    await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'user@email.com',
-      password: 'password123',
-      cpf: '00795584024',
-      cep: '36032490',
-    });
+  afterEach(async () => {
+    await connection.query('TRUNCATE TABLE users;');
   });
 
   afterAll(async () => {
@@ -26,14 +22,23 @@ describe('Update User Controller', () => {
     await connection.close();
   });
 
-  it('should be able to create a new user', async () => {
+  it('should be able to update a user data', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      phone: '32148000',
+      cpf: '65564241029',
+      cep: '36032490',
+    });
+
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
 
     const token = login.body.token;
 
-    const user = await repository.findByCpf('00795584024');
+    const user = await repository.findByCpf('65564241029');
 
     const response = await request(app)
       .put(`/users/update/${user.id}`)
@@ -41,11 +46,45 @@ describe('Update User Controller', () => {
         name: 'Outher User Name',
         email: 'outheruseremail@email.com',
         password: 'outherpassword123',
+        phone: '32148000',
         cpf: '00795584024',
         cep: '05010000',
       })
       .set('Authorization', 'Bearer ' + token);
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
+  });
+
+  it('should not be able to update a user if data is invalid', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      phone: '32148000',
+      cpf: '65564241029',
+      cep: '36032490',
+    });
+
+    const login = await request(app)
+      .post('/sessions/login')
+      .send({ email: 'user@email.com', password: 'password123' });
+
+    const token = login.body.token;
+
+    const user = await repository.findByCpf('65564241029');
+
+    const response = await request(app)
+      .put(`/users/update/${user.id}`)
+      .send({
+        name: 'Outher Us3r Name',
+        email: 'outheruseremailemail.com',
+        password: 'd123',
+        phone: '32148000',
+        cpf: '00795584024',
+        cep: '05010000',
+      })
+      .set('Authorization', 'Bearer ' + token);
+
+    expect(response.status).toBe(400);
   });
 });

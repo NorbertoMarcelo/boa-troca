@@ -21,6 +21,7 @@ describe('Authenticate User Use Case', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '86940657037',
       cep: '36036080',
     });
@@ -51,6 +52,7 @@ describe('Authenticate User Use Case', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '86940657037',
       cep: '36036080',
     });

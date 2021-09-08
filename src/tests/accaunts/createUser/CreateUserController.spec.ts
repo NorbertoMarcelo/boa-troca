@@ -24,6 +24,7 @@ describe('Create User Controller', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '08246241060',
       cep: '36032490',
     });
@@ -36,6 +37,7 @@ describe('Create User Controller', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '57960384002',
       cep: '36032490',
     });
@@ -44,7 +46,21 @@ describe('Create User Controller', () => {
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '57960384002',
+      cep: '36032490',
+    });
+
+    expect(response.status).toBe(400);
+  });
+
+  it('should not be able to create a new user if data is wrong', async () => {
+    const response = await request(app).post('/users/create').send({
+      name: 'User N4me',
+      email: 'useremail.com',
+      password: '123',
+      phone: '32148000',
+      cpf: '57960004002',
       cep: '36032490',
     });
 

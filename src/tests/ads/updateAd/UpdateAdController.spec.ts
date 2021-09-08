@@ -1,21 +1,22 @@
-import { AnnouncementsRepository } from '@modules/ads/repositories/AnnouncementsRepository';
+import { AdsRepository } from '@modules/ads/repositories/AdsRepository';
 import request from 'supertest';
 import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 
-describe('Read Announcement Controller', () => {
+describe('Update Announcement Controller', () => {
   let connection: Connection;
-  let adRepository: AnnouncementsRepository;
+  let adsRepository: AdsRepository;
 
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
-    adRepository = new AnnouncementsRepository();
+    adsRepository = new AdsRepository();
 
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
+      phone: '32148000',
       cpf: '58753551079',
       cep: '36032490',
     });
@@ -41,15 +42,22 @@ describe('Read Announcement Controller', () => {
       })
       .set('Authorization', 'Bearer ' + token);
 
-    const ad = await adRepository.findByTitle('Ad Title');
+    const ad = await adsRepository.findByTitle('Ad Title');
 
     const response = await request(app)
+      .put(`/ads/update/${ad[0].id}`)
+      .send({
+        title: 'Outher Ad Title',
+        description: 'Outher ad description.',
+      })
+      .set('Authorization', 'Bearer ' + token);
+
+    const read = await request(app)
       .get(`/ads/read/${ad[0].id}`)
       .set('Authorization', 'Bearer ' + token);
 
-    expect(response.status).toBe(201);
-    expect(response.body.title).toEqual('Ad Title');
-    expect(response.body.description).toEqual('The ad description.');
-    expect(response.body.status).toEqual('available');
+    expect(response.status).toBe(200);
+    expect(read.body.title).toEqual('Outher Ad Title');
+    expect(read.body.description).toEqual('Outher ad description.');
   });
 });

@@ -11,14 +11,10 @@ describe('Delete User Controller', () => {
     connection = await createConnection();
     await connection.runMigrations();
     repository = new UsersRepository();
+  });
 
-    await request(app).post('/users/create').send({
-      name: 'User Name',
-      email: 'user@email.com',
-      password: 'password123',
-      cpf: '58753551079',
-      cep: '36032490',
-    });
+  afterEach(async () => {
+    await connection.query('TRUNCATE TABLE users;');
   });
 
   afterAll(async () => {
@@ -26,21 +22,16 @@ describe('Delete User Controller', () => {
     await connection.close();
   });
 
-  it('should not be abele to delete a nonexistent user', async () => {
-    const login = await request(app)
-      .post('/sessions/login')
-      .send({ email: 'user@email.com', password: 'password123' });
+  it('should be able to delete an user', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      phone: '32148000',
+      cpf: '58753551079',
+      cep: '36032490',
+    });
 
-    const token = login.body.token;
-
-    const response = await request(app)
-      .delete(`/users/delete/${'000000000000'}`)
-      .set('Authorization', 'Bearer ' + token);
-
-    expect(response.status).toBe(400);
-  });
-
-  it('should be abele to delete an user', async () => {
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
@@ -53,6 +44,29 @@ describe('Delete User Controller', () => {
       .delete(`/users/delete/${user.id}`)
       .set('Authorization', 'Bearer ' + token);
 
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
+  });
+
+  it('should not be abele to delete a nonexistent user', async () => {
+    await request(app).post('/users/create').send({
+      name: 'User Name',
+      email: 'user@email.com',
+      password: 'password123',
+      phone: '32148000',
+      cpf: '58753551079',
+      cep: '36032490',
+    });
+
+    const login = await request(app)
+      .post('/sessions/login')
+      .send({ email: 'user@email.com', password: 'password123' });
+
+    const token = login.body.token;
+
+    const response = await request(app)
+      .delete(`/users/delete/5b1c2509-66d8-4783-b13d-572abb1ac3e8`)
+      .set('Authorization', 'Bearer ' + token);
+
+    expect(response.status).toBe(400);
   });
 });

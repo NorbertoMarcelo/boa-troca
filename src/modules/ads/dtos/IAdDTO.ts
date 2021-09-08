@@ -6,7 +6,7 @@ export interface ICreateAdDTO {
   title: string;
   description: string;
   status?: AdSatus;
-  user: User;
+  user?: string;
 }
 
 export interface IUpdateAdDTO {
@@ -32,5 +32,5 @@ export enum AdSatus {
 export interface IReadAd {
   title: string;
   description: string;
-  user: User;
+  user: string;
 }

@@ -4,7 +4,6 @@ import { CreateAdUseCase } from '@modules/ads/useCases/CreateAdUseCase';
 
 export class CreateAdController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { userId } = request.params;
     const { title, description } = request.body;
 
     const createAdUseCase = container.resolve(CreateAdUseCase);
@@ -12,7 +11,6 @@ export class CreateAdController {
     await createAdUseCase.execute({
       title,
       description,
-      userId,
     });
 
     return response.status(201).send();

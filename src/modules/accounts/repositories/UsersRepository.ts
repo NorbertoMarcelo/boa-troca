@@ -30,9 +30,11 @@ export class UsersRepository implements IUsersRepository {
 
   async create(data: ICreateUserDTO): Promise<void> {
     const user = this.repository.create({
+      avatar: data.avatar,
       name: data.name,
       email: data.email,
       password: data.password,
+      phone: data.phone,
       cpf: data.cpf,
       cep: data.cep,
     });
@@ -41,9 +43,11 @@ export class UsersRepository implements IUsersRepository {
 
   async update(data: IUpdateUserDTO): Promise<void> {
     await this.repository.update(data.id, {
+      avatar: data.avatar,
       name: data.name,
       email: data.email,
       password: data.password,
+      phone: data.phone,
       cep: data.cep,
     });
   }
