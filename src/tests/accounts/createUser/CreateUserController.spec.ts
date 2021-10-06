@@ -11,7 +11,7 @@ describe('Create User Controller', () => {
   });
 
   afterEach(async () => {
-    await connection.query('TRUNCATE TABLE users;');
+    await connection.query('TRUNCATE users CASCADE;');
   });
 
   afterAll(async () => {

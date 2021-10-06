@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '@configs/upload';
 
 import { CreateUserController } from '@modules/accounts/controllers/CreateUserController';
 import { ReadUserController } from '@modules/accounts/controllers/ReadUserController';
@@ -11,18 +10,12 @@ import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 
 const usersRoutes = Router();
 
-const uploadAvatar = multer(uploadConfig.upload('./tmp/avatar'));
-
 const createUserController = new CreateUserController();
 const readUserController = new ReadUserController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 
-usersRoutes.post(
-  '/create',
-  uploadAvatar.single('avatar'),
-  createUserController.handle
-);
+usersRoutes.post('/create', createUserController.handle);
 
 usersRoutes.use(ensureAuthenticated);
 

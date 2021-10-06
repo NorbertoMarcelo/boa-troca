@@ -17,11 +17,6 @@ export class CreateUsers1630242512939 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'avatar',
-            type: 'varchar',
-            isNullable: true,
-          },
-          {
             name: 'name',
             type: 'varchar',
           },
@@ -46,11 +41,6 @@ export class CreateUsers1630242512939 implements MigrationInterface {
           {
             name: 'cep',
             type: 'varchar',
-          },
-          {
-            name: 'ads',
-            type: 'uuid',
-            isNullable: true,
           },
           {
             name: 'created_at',

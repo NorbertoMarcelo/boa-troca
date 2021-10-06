@@ -24,7 +24,6 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     const user = new User();
 
     Object.assign(user, {
-      avatar: data.avatar,
       name: data.name,
       email: data.email,
       password: data.password,

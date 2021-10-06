@@ -44,7 +44,6 @@ export class CreateUserUseCase {
     const passwordHash = await hash(data.password, 8);
 
     await this.usersRepository.create({
-      avatar: data.avatar || null,
       name: data.name,
       email: data.email,
       password: passwordHash,

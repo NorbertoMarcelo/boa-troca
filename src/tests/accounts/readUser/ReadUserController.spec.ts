@@ -3,7 +3,7 @@ import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
 
-describe('Update User Controller', () => {
+describe('Read User Controller', () => {
   let connection: Connection;
   let repository: UsersRepository;
 
@@ -14,7 +14,7 @@ describe('Update User Controller', () => {
   });
 
   afterEach(async () => {
-    await connection.query('TRUNCATE TABLE users;');
+    await connection.query('TRUNCATE users CASCADE;');
   });
 
   afterAll(async () => {
@@ -22,7 +22,7 @@ describe('Update User Controller', () => {
     await connection.close();
   });
 
-  it('should be able to update a user data', async () => {
+  it('should be able to read an user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
@@ -41,21 +41,16 @@ describe('Update User Controller', () => {
     const user = await repository.findByCpf('65564241029');
 
     const response = await request(app)
-      .put(`/users/update/${user.id}`)
-      .send({
-        name: 'Outher User Name',
-        email: 'outheruseremail@email.com',
-        password: 'outherpassword123',
-        phone: '32148000',
-        cpf: '00795584024',
-        cep: '05010000',
-      })
+      .get(`/users/read/${user.id}`)
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(200);
+    expect(response.body.name).toEqual('User Name');
+    expect(response.body.email).toEqual('user@email.com');
+    expect(response.body.cep).toEqual('36032490');
   });
 
-  it('should not be able to update a user if data is invalid', async () => {
+  it('should not be abele to read a nonexistent user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
@@ -71,18 +66,8 @@ describe('Update User Controller', () => {
 
     const token = login.body.token;
 
-    const user = await repository.findByCpf('65564241029');
-
     const response = await request(app)
-      .put(`/users/update/${user.id}`)
-      .send({
-        name: 'Outher Us3r Name',
-        email: 'outheruseremailemail.com',
-        password: 'd123',
-        phone: '32148000',
-        cpf: '00795584024',
-        cep: '05010000',
-      })
+      .get(`/users/read/5b1c2509-66d8-4783-b13d-572abb1ac3e8`)
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(400);

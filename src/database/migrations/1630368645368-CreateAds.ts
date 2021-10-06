@@ -20,10 +20,6 @@ export class CreateAds1630368645368 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'status',
-            type: 'varchar',
-          },
-          {
             name: 'user',
             type: 'uuid',
             isNullable: true,
@@ -42,6 +38,16 @@ export class CreateAds1630368645368 implements MigrationInterface {
             name: 'deleted_at',
             type: 'timestamp',
             isNullable: true,
+          },
+        ],
+        foreignKeys: [
+          {
+            name: 'FKAds',
+            referencedTableName: 'users',
+            referencedColumnNames: ['id'],
+            columnNames: ['user'],
+            onDelete: 'SET NULL',
+            onUpdate: 'SET NULL',
           },
         ],
       })

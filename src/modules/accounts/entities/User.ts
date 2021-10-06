@@ -19,9 +19,6 @@ export class User {
   id: string;
 
   @Column()
-  avatar: string;
-
-  @Column()
   name: string;
 
   @Column()

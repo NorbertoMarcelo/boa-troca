@@ -3,7 +3,7 @@ import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
 
-describe('Delete User Controller', () => {
+describe('Update User Controller', () => {
   let connection: Connection;
   let repository: UsersRepository;
 
@@ -14,7 +14,7 @@ describe('Delete User Controller', () => {
   });
 
   afterEach(async () => {
-    await connection.query('TRUNCATE TABLE users;');
+    await connection.query('TRUNCATE users CASCADE;');
   });
 
   afterAll(async () => {
@@ -22,13 +22,13 @@ describe('Delete User Controller', () => {
     await connection.close();
   });
 
-  it('should be able to delete an user', async () => {
+  it('should be able to update a user data', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       phone: '32148000',
-      cpf: '58753551079',
+      cpf: '65564241029',
       cep: '36032490',
     });
 
@@ -38,22 +38,30 @@ describe('Delete User Controller', () => {
 
     const token = login.body.token;
 
-    const user = await repository.findByCpf('58753551079');
+    const user = await repository.findByCpf('65564241029');
 
     const response = await request(app)
-      .delete(`/users/delete/${user.id}`)
+      .put(`/users/update/${user.id}`)
+      .send({
+        name: 'Outher User Name',
+        email: 'outheruseremail@email.com',
+        password: 'outherpassword123',
+        phone: '32148000',
+        cpf: '00795584024',
+        cep: '05010000',
+      })
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(200);
   });
 
-  it('should not be abele to delete a nonexistent user', async () => {
+  it('should not be able to update a user if data is invalid', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       phone: '32148000',
-      cpf: '58753551079',
+      cpf: '65564241029',
       cep: '36032490',
     });
 
@@ -63,8 +71,18 @@ describe('Delete User Controller', () => {
 
     const token = login.body.token;
 
+    const user = await repository.findByCpf('65564241029');
+
     const response = await request(app)
-      .delete(`/users/delete/5b1c2509-66d8-4783-b13d-572abb1ac3e8`)
+      .put(`/users/update/${user.id}`)
+      .send({
+        name: 'Outher Us3r Name',
+        email: 'outheruseremailemail.com',
+        password: 'd123',
+        phone: '32148000',
+        cpf: '00795584024',
+        cep: '05010000',
+      })
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(400);

@@ -2,7 +2,6 @@ import { User } from '@modules/accounts/entities/User';
 
 export interface ICreateUserDTO {
   id?: string;
-  avatar?: string;
   name: string;
   email: string;
   password: string;
@@ -13,7 +12,6 @@ export interface ICreateUserDTO {
 
 export interface IUpdateUserDTO {
   id: string;
-  avatar?: string;
   name: string;
   email: string;
   password: string;

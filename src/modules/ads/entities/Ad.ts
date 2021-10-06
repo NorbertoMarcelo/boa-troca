@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
@@ -24,7 +25,8 @@ export class Ad {
   @Column()
   status: string;
 
-  @Column()
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'id' })
   user: string;
 
   @CreateDateColumn()

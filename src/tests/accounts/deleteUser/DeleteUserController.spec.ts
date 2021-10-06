@@ -3,7 +3,7 @@ import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../app';
 import { UsersRepository } from '@modules/accounts/repositories/UsersRepository';
 
-describe('Read User Controller', () => {
+describe('Delete User Controller', () => {
   let connection: Connection;
   let repository: UsersRepository;
 
@@ -14,7 +14,7 @@ describe('Read User Controller', () => {
   });
 
   afterEach(async () => {
-    await connection.query('TRUNCATE TABLE users;');
+    await connection.query('TRUNCATE users CASCADE;');
   });
 
   afterAll(async () => {
@@ -22,13 +22,13 @@ describe('Read User Controller', () => {
     await connection.close();
   });
 
-  it('should be able to read an user', async () => {
+  it('should be able to delete an user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       phone: '32148000',
-      cpf: '65564241029',
+      cpf: '58753551079',
       cep: '36032490',
     });
 
@@ -38,25 +38,22 @@ describe('Read User Controller', () => {
 
     const token = login.body.token;
 
-    const user = await repository.findByCpf('65564241029');
+    const user = await repository.findByCpf('58753551079');
 
     const response = await request(app)
-      .get(`/users/read/${user.id}`)
+      .delete(`/users/delete/${user.id}`)
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(200);
-    expect(response.body.name).toEqual('User Name');
-    expect(response.body.email).toEqual('user@email.com');
-    expect(response.body.cep).toEqual('36032490');
   });
 
-  it('should not be abele to read a nonexistent user', async () => {
+  it('should not be abele to delete a nonexistent user', async () => {
     await request(app).post('/users/create').send({
       name: 'User Name',
       email: 'user@email.com',
       password: 'password123',
       phone: '32148000',
-      cpf: '65564241029',
+      cpf: '58753551079',
       cep: '36032490',
     });
 
@@ -67,7 +64,7 @@ describe('Read User Controller', () => {
     const token = login.body.token;
 
     const response = await request(app)
-      .get(`/users/read/5b1c2509-66d8-4783-b13d-572abb1ac3e8`)
+      .delete(`/users/delete/5b1c2509-66d8-4783-b13d-572abb1ac3e8`)
       .set('Authorization', 'Bearer ' + token);
 
     expect(response.status).toBe(400);

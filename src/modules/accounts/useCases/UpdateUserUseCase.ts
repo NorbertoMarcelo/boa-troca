@@ -32,7 +32,6 @@ export class UpdateUserUseCase {
     const passwordHash = await hash(data.password, 8);
 
     await this.usersRepository.update({
-      avatar: data.avatar,
       id: data.id,
       name: data.name,
       email: data.email,

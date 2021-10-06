@@ -11,7 +11,7 @@ describe('Authenticate User Controller', () => {
   });
 
   afterEach(async () => {
-    await connection.query('TRUNCATE TABLE users;');
+    await connection.query('TRUNCATE users CASCADE;');
   });
 
   afterAll(async () => {
@@ -32,6 +32,8 @@ describe('Authenticate User Controller', () => {
     const login = await request(app)
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
+
+    console.log(login.body.user);
 
     expect(login.status).toBe(200);
     expect(login.body).toHaveProperty('token');
