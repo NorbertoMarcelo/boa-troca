@@ -29,7 +29,6 @@ export class AdsRepository implements IAdsRepository {
     const ad = this.repository.create({
       title: data.title,
       description: data.description,
-      status: data.status,
       user: data.user,
     });
     await this.repository.save(ad);

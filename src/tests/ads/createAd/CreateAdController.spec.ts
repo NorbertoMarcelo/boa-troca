@@ -29,6 +29,8 @@ describe('Create Announcement Controller', () => {
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
 
+    console.log(login.body);
+
     const token = login.body.token;
 
     const response = await request(app)

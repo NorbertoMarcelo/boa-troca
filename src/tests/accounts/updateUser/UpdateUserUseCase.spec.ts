@@ -1,7 +1,7 @@
 import { AppError } from '@errors/AppError';
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
 import { UpdateUserUseCase } from '@modules/accounts/useCases/UpdateUserUseCase';
-import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accounts/UserRepositoryInMemory';
 
 describe('Update User Use Case', () => {
   let createUserUseCase: CreateUserUseCase;

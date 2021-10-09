@@ -22,12 +22,9 @@ export class Ad {
   @Column()
   description: string;
 
-  @Column()
-  status: string;
-
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'id' })
-  user: string;
+  @JoinColumn({ name: 'user' })
+  user: User;
 
   @CreateDateColumn()
   created_at: Date;

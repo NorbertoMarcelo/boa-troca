@@ -1,5 +1,5 @@
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
-import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accounts/UserRepositoryInMemory';
 import { AppError } from '@errors/AppError';
 
 describe('Create User Use Case', () => {

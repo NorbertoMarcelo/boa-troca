@@ -5,8 +5,7 @@ export interface ICreateAdDTO {
   id?: string;
   title: string;
   description: string;
-  status?: AdSatus;
-  user?: string;
+  user: User;
 }
 
 export interface IUpdateAdDTO {

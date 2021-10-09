@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import multer from 'multer';
 
 import { CreateUserController } from '@modules/accounts/controllers/CreateUserController';
 import { ReadUserController } from '@modules/accounts/controllers/ReadUserController';

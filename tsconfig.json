@@ -7,36 +7,16 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@apis/*": [
-        "./src/apis/*"
-      ],
-      "@configs/*": [
-        "./src/configs/*"
-      ],
-      "@database/*": [
-        "./src/database/*"
-      ],
-      "@errors/*": [
-        "./src/errors/*"
-      ],
-      "@middlewares/*": [
-        "./src/middlewares/*"
-      ],
-      "@modules/*": [
-        "./src/modules/*"
-      ],
-      "@routes/*": [
-        "./src/routes/*"
-      ],
-      "@tests/*": [
-        "./src/tests/*"
-      ],
-      "@types/*": [
-        "./src/types/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ]
+      "@apis/*": ["./src/apis/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@database/*": ["./src/database/*"],
+      "@errors/*": ["./src/errors/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@tests/*": ["./src/tests/*"],
+      "@types/*": ["src/@types/*"],
+      "@utils/*": ["./src/utils/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,

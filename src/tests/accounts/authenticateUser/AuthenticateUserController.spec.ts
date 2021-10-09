@@ -33,8 +33,6 @@ describe('Authenticate User Controller', () => {
       .post('/sessions/login')
       .send({ email: 'user@email.com', password: 'password123' });
 
-    console.log(login.body.user);
-
     expect(login.status).toBe(200);
     expect(login.body).toHaveProperty('token');
     expect(login.body).toHaveProperty('user');

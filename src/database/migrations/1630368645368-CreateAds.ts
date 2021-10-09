@@ -42,7 +42,7 @@ export class CreateAds1630368645368 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'FKAds',
+            name: 'FKAdsUser',
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user'],

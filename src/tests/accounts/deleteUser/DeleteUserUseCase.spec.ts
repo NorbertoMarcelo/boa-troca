@@ -1,6 +1,6 @@
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
 import { DeleteUserUseCase } from '@modules/accounts/useCases/DeleteUserUseCase';
-import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accounts/UserRepositoryInMemory';
 import { AppError } from '@errors/AppError';
 import { ReadUserUseCase } from '@modules/accounts/useCases/ReadUserUseCase';
 

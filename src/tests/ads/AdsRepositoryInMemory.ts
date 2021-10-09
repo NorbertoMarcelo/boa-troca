@@ -27,7 +27,7 @@ export class AdsRepositoryInMemory implements IAdsRepository {
     Object.assign(ad, {
       title: data.title,
       description: data.description,
-      status: data.status,
+      user: data.user,
     });
 
     this.ads.push(ad);

@@ -1,9 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import {
-  AdSatus,
-  IAdsRepository,
-  ICreateAdDTO,
-} from '@modules/ads/dtos/IAdDTO';
+import { IAdsRepository, ICreateAdDTO } from '@modules/ads/dtos/IAdDTO';
 
 @injectable()
 export class CreateAdUseCase {
@@ -16,8 +12,7 @@ export class CreateAdUseCase {
     await this.adsRepository.create({
       title: data.title,
       description: data.description,
-      status: AdSatus.available,
-      user: data.user || null,
+      user: data.user,
     });
   }
 }

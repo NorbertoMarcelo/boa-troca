@@ -1,4 +1,4 @@
-import { UsersRepositoryInMemory } from '@tests/accaunts/UserRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accounts/UserRepositoryInMemory';
 import { CreateUserUseCase } from '@modules/accounts/useCases/CreateUserUseCase';
 import { ReadUserUseCase } from '@modules/accounts/useCases/ReadUserUseCase';
 import { AppError } from '@errors/AppError';
