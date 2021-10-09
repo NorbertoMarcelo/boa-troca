@@ -15,6 +15,7 @@ export interface IUpdateAdDTO {
 }
 
 export interface IAdsRepository {
+  findAll(): Promise<Ad[]>;
   findByTitle(title: string): Promise<Ad[]>;
   findById(id: string): Promise<Ad>;
   create(data: ICreateAdDTO): Promise<void>;

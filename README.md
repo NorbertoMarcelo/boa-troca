@@ -25,11 +25,8 @@
 
 ### **Requisitos funcionais**
 
-- [ ] Deve ser possível listar todos anúncios disponíveis
-- [ ] Deve ser possível listar todos anúncios disponíveis por categoria
-- [ ] Deve ser possível listar todos anúncios disponíveis por palavra chave
-- [ ] Deve ser possível listar todos anúncios disponíveis por proximidade
+- [x] Deve ser possível listar todos anúncios disponíveis
 
 ### **Requisitos não funcionais**
 
-- [ ] O usuário não precisa estar logado
+- [x] O usuário não precisa estar logado

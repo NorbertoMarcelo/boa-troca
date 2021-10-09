@@ -6,6 +6,7 @@ import { UpdateAdController } from '@modules/ads/controllers/UpdateAdController'
 import { DeleteAdController } from '@modules/ads/controllers/DeleteAdController';
 
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
+import { ListAdsController } from '@modules/ads/controllers/ListAdsController';
 
 const adsRouter = Router();
 
@@ -13,11 +14,14 @@ const createAdController = new CreateAdController();
 const readAdController = new ReadAdController();
 const updateController = new UpdateAdController();
 const deleteAdController = new DeleteAdController();
+const listAdsController = new ListAdsController();
+
+adsRouter.get('/read/:id', readAdController.handle);
+adsRouter.get('/list', listAdsController.handle);
 
 adsRouter.use(ensureAuthenticated);
 
 adsRouter.post('/create', createAdController.handle);
-adsRouter.get('/read/:id', readAdController.handle);
 adsRouter.put('/update/:id', updateController.handle);
 adsRouter.delete('/delete/:id', deleteAdController.handle);
 

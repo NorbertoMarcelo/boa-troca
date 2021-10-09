@@ -9,11 +9,7 @@ export class CreateAdController {
 
     const createAdUseCase = container.resolve(CreateAdUseCase);
 
-    await createAdUseCase.execute({
-      title,
-      description,
-      user: id,
-    });
+    await createAdUseCase.execute(title, description, id);
 
     return response.status(201).send();
   }

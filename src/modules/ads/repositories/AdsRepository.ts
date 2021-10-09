@@ -13,6 +13,11 @@ export class AdsRepository implements IAdsRepository {
     this.repository = getRepository(Ad);
   }
 
+  async findAll(): Promise<Ad[]> {
+    const listAds = await this.repository.find();
+    return listAds;
+  }
+
   async findByTitle(title: string): Promise<Ad[]> {
     const ads = await this.repository.find({
       title: Like(`%${title}%`),
