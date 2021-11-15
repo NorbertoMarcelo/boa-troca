@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Marcelo Norberto",
   "license": "MIT",
+  "engines": {
+    "node": "12.22.7",
+    "npm": "7.19.0"
+  },
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli",
