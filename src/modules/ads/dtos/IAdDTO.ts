@@ -32,5 +32,5 @@ export enum AdSatus {
 export interface IReadAd {
   title: string;
   description: string;
-  user: string;
+  user: User;
 }

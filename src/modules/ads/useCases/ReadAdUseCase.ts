@@ -11,7 +11,7 @@ export class ReadAdUseCase {
 
   async execute(id: string): Promise<IReadAd> {
     const ad = await this.adRepository.findById(id);
-    if (!ad) throw new AppError('Announcement not found.');
+    if (!ad) throw new AppError('Ad not found.');
 
     const readAd: IReadAd = {
       title: ad.title,

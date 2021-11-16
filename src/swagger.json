@@ -1,0 +1,398 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BoaTroca Documentation",
+    "description": "Documentation for platform api Boa Troca",
+    "version": "1.0.0",
+    "contact": {
+      "email": "norbertomarcelo8@gmail.com"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Authenticate"],
+        "summary": "Authenticate for login",
+        "description": "Authenticate for login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "user@email.com",
+                  "password": "password123"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzcwMjAwMTMsImV4cCI6MTYzNzEwNjQxMywic3ViIjoiYTRkNWJjMWMtMDQxMi00MTc5LWJlMDAtNzJmYzU1YWFmOTQyIn0.cmRGnbAoTifEBXWwpVclI0Y4TeaQaJXDUj5vEnRXTtM",
+                    "user": {
+                      "name": "User Name",
+                      "email": "user@email.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User already exists."
+          }
+        }
+      }
+    },
+    "/users/create": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create an user",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "cep": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User Name",
+                  "email": "user@email.com",
+                  "password": "password123",
+                  "phone": "900000000",
+                  "cpf": "00000000000",
+                  "cep": "36000000"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists."
+          }
+        }
+      }
+    },
+    "/users/read/:id": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show an user",
+        "description": "Show an user informations",
+
+        "responses": {
+          "200": {
+            "description": "User Informations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "cep": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "name": "User Name",
+                    "email": "user@email.com",
+                    "phone": "900000000",
+                    "cep": "36000000"
+                  }
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "Internal server error - invalid input syntax for type uuid"
+          }
+        }
+      }
+    },
+    "/users/update/:id": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update informations",
+        "description": "Update informations for an user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "cep": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User Name",
+                  "email": "user@email.com",
+                  "password": "password123",
+                  "phone": "900000000",
+                  "cep": "36000000"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated informations."
+          },
+          "501": {
+            "description": "Internal server error - invalid input syntax for type uuid"
+          }
+        }
+      }
+    },
+    "/users/delete/:id": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete an user",
+        "description": "Delete a user account",
+
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "501": {
+            "description": "Internal server error - invalid input syntax for type uuid"
+          }
+        }
+      }
+    },
+    "/ads/create": {
+      "post": {
+        "tags": ["Ads"],
+        "summary": "Create an ad",
+        "description": "Create a new ad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "title": "Ad Title",
+                  "description": "Ad Description"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "User already exists."
+          }
+        }
+      }
+    },
+    "/ads/read/:id": {
+      "get": {
+        "tags": ["Ads"],
+        "summary": "Show an ad",
+        "description": "Show an ad informations",
+        "responses": {
+          "200": {
+            "description": "Ad Informations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "User"
+                    }
+                  },
+                  "example": {
+                    "title": "Ad Title",
+                    "description": "Ad description.",
+                    "user": "a4d5bc1c-012-4179-be00-72fc55aaf942"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ad not found."
+          }
+        }
+      }
+    },
+    "/ads/list": {
+      "get": {
+        "tags": ["Ads"],
+        "summary": "Show all ads",
+        "description": "Show all ads",
+        "responses": {
+          "200": {
+            "description": "Ads List",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "User"
+                    }
+                  },
+                  "example": {
+                    "title": "Ad Title",
+                    "description": "Ad description.",
+                    "user": "a4d5bc1c-012-4179-be00-72fc55aaf942"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ad not found."
+          }
+        }
+      }
+    },
+    "/ads/update/:id": {
+      "put": {
+        "tags": ["Ads"],
+        "summary": "Update ad informations",
+        "description": "Update informations for an ad",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "title": "New Ad Title",
+                  "description": " New Ad Description"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated informations."
+          },
+          "501": {
+            "description": "Internal server error - invalid input syntax for type uuid"
+          }
+        }
+      }
+    },
+    "/ads/delete/:id": {
+      "delete": {
+        "tags": ["Ads"],
+        "summary": "Delete an ad",
+        "description": "Delete an ad",
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "501": {
+            "description": "Internal server error - invalid input syntax for type uuid"
+          }
+        }
+      }
+    }
+  }
+}
