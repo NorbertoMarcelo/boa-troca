@@ -11,7 +11,10 @@ describe('Create Announcement Use Case', () => {
 
   beforeEach(() => {
     adRepositoryInMemory = new AdsRepositoryInMemory();
-    createAdUseCase = new CreateAdUseCase(adRepositoryInMemory);
+    createAdUseCase = new CreateAdUseCase(
+      adRepositoryInMemory,
+      usersRepositoryInMemory
+    );
     usersRepositoryInMemory = new UsersRepositoryInMemory();
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
@@ -28,13 +31,9 @@ describe('Create Announcement Use Case', () => {
 
     const user = await usersRepositoryInMemory.findByCpf('54923702001');
 
-    // const response = await readUserUseCase.execute(user.id);
+    console.log(user.id);
 
-    await createAdUseCase.execute({
-      title: 'Ad Title',
-      description: 'The ad description.',
-      user: user,
-    });
+    await createAdUseCase.execute('Ad Title', 'The ad description.', user.id);
 
     const ad = await adRepositoryInMemory.findByTitle('Ad Title');
 

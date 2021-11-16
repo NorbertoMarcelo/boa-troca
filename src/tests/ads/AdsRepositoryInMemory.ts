@@ -49,4 +49,8 @@ export class AdsRepositoryInMemory implements IAdsRepository {
       }
     });
   }
+
+  async findAll(): Promise<Ad[]> {
+    return this.ads;
+  }
 }
