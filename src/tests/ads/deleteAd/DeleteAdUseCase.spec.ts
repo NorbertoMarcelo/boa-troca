@@ -2,23 +2,25 @@ import { AppError } from '@errors/AppError';
 import { CreateAdUseCase } from '@modules/ads/useCases/CreateAdUseCase';
 import { DeleteAdUseCase } from '@modules/ads/useCases/DeleteAdUseCase';
 import { AdsRepositoryInMemory } from '../AdsRepositoryInMemory';
+import { UsersRepositoryInMemory } from '@tests/accounts/UserRepositoryInMemory';
 
 describe('Delete Ad Use Case', () => {
   let createAdUseCase: CreateAdUseCase;
   let deleteAdUseCase: DeleteAdUseCase;
   let adRepositoryInMemory: AdsRepositoryInMemory;
+  let usersRepositoryInMemory: UsersRepositoryInMemory;
 
   beforeEach(() => {
     adRepositoryInMemory = new AdsRepositoryInMemory();
-    createAdUseCase = new CreateAdUseCase(adRepositoryInMemory);
+    createAdUseCase = new CreateAdUseCase(
+      adRepositoryInMemory,
+      usersRepositoryInMemory
+    );
     deleteAdUseCase = new DeleteAdUseCase(adRepositoryInMemory);
   });
 
   it('shoud be able to delete an ad', async () => {
-    await createAdUseCase.execute({
-      title: 'Ad Title',
-      description: 'The ad description.',
-    });
+    await createAdUseCase.execute('Ad Title', 'The ad description.', 'user');
 
     const deleteAd = await adRepositoryInMemory.findByTitle('Ad Title');
 

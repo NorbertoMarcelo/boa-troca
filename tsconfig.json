@@ -3,6 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "rootDir": "./",
+    "outDir": "./dist",
     "removeComments": true,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
@@ -24,5 +25,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
-  }
+  },
+  "exclude": ["**/*.spec.ts"]
 }
